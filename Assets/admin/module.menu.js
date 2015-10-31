@@ -78,7 +78,6 @@ $(function(){
 					}
 				}
 			},
-			
 			category : {
 				url : "/admin/module/menu/category/delete.ajax",
 				success : function(response){
@@ -147,7 +146,7 @@ $(function(){
 	
 	
 	// Add & Create new event listener
-	$("[data-button='create-new']").click(function(event){
+	$("[data-button='create-new']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
 			url : "/admin/module/menu/item/add.ajax",
@@ -164,7 +163,7 @@ $(function(){
 	
 	
 	// Add event listener
-	$("[data-button='add']").click(function(event){
+	$("[data-button='add']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
 			url : "/admin/module/menu/item/add.ajax",
@@ -225,7 +224,7 @@ $(function(){
 	
 	
 	// Save and Create event listener
-	$("[data-button='save-create']").click(function(event){
+	$("[data-button='save-create']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
 			url : "/admin/module/menu/item/edit.ajax",
@@ -242,7 +241,7 @@ $(function(){
 	
 	
 	// Save and exit event listener
-	$("[data-button='save-exit']").click(function(event){
+	$("[data-button='save-exit']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
 			url : "/admin/module/menu/item/edit.ajax",
