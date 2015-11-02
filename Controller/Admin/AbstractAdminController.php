@@ -15,50 +15,50 @@ use Cms\Controller\Admin\AbstractController;
 
 abstract class AbstractAdminController extends AbstractController
 {
-	/**
-	 * Returns MenuWidget service
-	 * 
-	 * @return \Menu\Service\MenuWidget
-	 */
-	final protected function getMenuWidget()
-	{
-		return $this->getModuleService('menuWidget');
-	}
+    /**
+     * Returns MenuWidget service
+     * 
+     * @return \Menu\Service\MenuWidget
+     */
+    final protected function getMenuWidget()
+    {
+        return $this->getModuleService('menuWidget');
+    }
 
-	/**
-	 * Returns category manager
-	 * 
-	 * @return \Menu\Service\CategoryManager
-	 */
-	final protected function getCategoryManager()
-	{
-		return $this->getModuleService('categoryManager');
-	}
+    /**
+     * Returns category manager
+     * 
+     * @return \Menu\Service\CategoryManager
+     */
+    final protected function getCategoryManager()
+    {
+        return $this->getModuleService('categoryManager');
+    }
 
-	/**
-	 * Returns item manager
-	 * 
-	 * @return \Menu\Service\ItemManager
-	 */
-	final protected function getItemManager()
-	{
-		return $this->getModuleService('itemManager');
-	}
+    /**
+     * Returns item manager
+     * 
+     * @return \Menu\Service\ItemManager
+     */
+    final protected function getItemManager()
+    {
+        return $this->getModuleService('itemManager');
+    }
 
-	/**
-	 * Returns prepared menu link builder
-	 * 
-	 * @return \Menu\Service\LinkBuilder
-	 */
-	final protected function getLinkBuilder()
-	{
-		$menu = $this->moduleManager->getModule('Menu');
+    /**
+     * Returns prepared menu link builder
+     * 
+     * @return \Menu\Service\LinkBuilder
+     */
+    final protected function getLinkBuilder()
+    {
+        $menu = $this->moduleManager->getModule('Menu');
 
-		// Menu link builder is just prepared, but now configured yet. I.e it has no data yet
-		// So we'll be adding it here. If adding it in Module definition, then that would be extra overhead
-		$linkBuilder = $menu->getService('linkBuilder');
-		$linkBuilder->loadFromDefiniton($menu->getLinkDefinitions(), $this->moduleManager);
+        // Menu link builder is just prepared, but now configured yet. I.e it has no data yet
+        // So we'll be adding it here. If adding it in Module definition, then that would be extra overhead
+        $linkBuilder = $menu->getService('linkBuilder');
+        $linkBuilder->loadFromDefiniton($menu->getLinkDefinitions(), $this->moduleManager);
 
-		return $linkBuilder;
-	}
+        return $linkBuilder;
+    }
 }

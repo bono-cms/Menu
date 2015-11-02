@@ -13,72 +13,72 @@ namespace Menu\Service;
 
 interface CategoryManagerInterface
 {
-	/**
-	 * Fetches the first category id
-	 * 
-	 * @return string
-	 */
-	public function fetchFirstId();
+    /**
+     * Fetches the first category id
+     * 
+     * @return string
+     */
+    public function fetchFirstId();
 
-	/**
-	 * Fetches the last inserted id
-	 * 
-	 * @return integer
-	 */
-	public function fetchLastId();
+    /**
+     * Fetches the last inserted id
+     * 
+     * @return integer
+     */
+    public function fetchLastId();
 
-	/**
-	 * Returns last inserted id
-	 * 
-	 * @return integer
-	 */
-	public function getLastId();
+    /**
+     * Returns last inserted id
+     * 
+     * @return integer
+     */
+    public function getLastId();
 
-	/**
-	 * Fetches unique category classes
-	 * 
-	 * @return array
-	 */
-	public function fetchClasses();
+    /**
+     * Fetches unique category classes
+     * 
+     * @return array
+     */
+    public function fetchClasses();
 
-	/**
-	 * Adds a category
-	 * 
-	 * @param array $data Form data
-	 * @return boolean
-	 */
-	public function add(array $data);
+    /**
+     * Adds a category
+     * 
+     * @param array $data Form data
+     * @return boolean
+     */
+    public function add(array $data);
 
-	/**
-	 * Updates a category
-	 * 
-	 * @param array $data Form data
-	 * @return boolean
-	 */
-	public function update(array $data);
+    /**
+     * Updates a category
+     * 
+     * @param array $data Form data
+     * @return boolean
+     */
+    public function update(array $data);
 
-	/**
-	 * Deletes a category by its associated id
-	 * Also remove items associated with given category id
-	 * 
-	 * @param string $id
-	 * @return boolean Depending on success
-	 */
-	public function deleteById($id);
+    /**
+     * Deletes a category by its associated id
+     * Also remove items associated with given category id
+     * 
+     * @param string $id
+     * @return boolean Depending on success
+     */
+    public function deleteById($id);
 
-	/**
-	 * Fetches all categories
-	 * Returns an array of category bags
-	 * 
-	 * @return array
-	 */
-	public function fetchAll();
+    /**
+     * Fetches all categories
+     * Returns an array of category bags
+     * 
+     * @return array
+     */
+    public function fetchAll();
 
-	/**
-	 * Fetches a category bag by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id);
+    /**
+     * Fetches a category bag by its associated id
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchById($id);
 }

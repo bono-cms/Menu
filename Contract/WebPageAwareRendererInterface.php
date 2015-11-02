@@ -15,11 +15,11 @@ use Cms\Service\WebPageManagerInterface;
 
 interface WebPageAwareRendererInterface
 {
-	/**
-	 * Sets web page manager that can generate URLs
-	 * 
-	 * @param \Cms\Service\WebPageManagerInterface $webPageManager
-	 * @return void
-	 */
-	public function setWebPageManager(WebPageManagerInterface $webPageManager);
+    /**
+     * Sets web page manager that can generate URLs
+     * 
+     * @param \Cms\Service\WebPageManagerInterface $webPageManager
+     * @return void
+     */
+    public function setWebPageManager(WebPageManagerInterface $webPageManager);
 }

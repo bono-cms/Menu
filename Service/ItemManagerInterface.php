@@ -16,83 +16,83 @@ namespace Menu\Service;
  */
 interface ItemManagerInterface
 {
-	/**
-	 * Fetches dummy menu item's entity
-	 * 
-	 * @param string $categoryId
-	 * @param string $parentId
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy($categoryId = null, $parentId = null);
+    /**
+     * Fetches dummy menu item's entity
+     * 
+     * @param string $categoryId
+     * @param string $parentId
+     * @return \Krystal\Stdlib\VirtualEntity
+     */
+    public function fetchDummy($categoryId = null, $parentId = null);
 
-	/**
-	 * Saves an order that has been dragged and dropped
-	 * 
-	 * @param string $json JSON string
-	 * @return boolean
-	 */
-	public function save($json);
+    /**
+     * Saves an order that has been dragged and dropped
+     * 
+     * @param string $json JSON string
+     * @return boolean
+     */
+    public function save($json);
 
-	/**
-	 * Fetch all items associated with given category id
-	 * 
-	 * @param string $categoryId
-	 * @return array
-	 */
-	public function fetchAllByCategoryId($categoryId);
+    /**
+     * Fetch all items associated with given category id
+     * 
+     * @param string $categoryId
+     * @return array
+     */
+    public function fetchAllByCategoryId($categoryId);
 
-	/**
-	 * Fetches all published items associated with given category id
-	 * 
-	 * @param string $categoryId
-	 * @return array
-	 */
-	public function fetchAllPublishedByCategoryId($categoryId);
+    /**
+     * Fetches all published items associated with given category id
+     * 
+     * @param string $categoryId
+     * @return array
+     */
+    public function fetchAllPublishedByCategoryId($categoryId);
 
-	/**
-	 * Fetches all published items associated with given category class
-	 * 
-	 * @param string $class Category class
-	 * @return array
-	 */
-	public function fetchAllPublishedByCategoryClass($class);
+    /**
+     * Fetches all published items associated with given category class
+     * 
+     * @param string $class Category class
+     * @return array
+     */
+    public function fetchAllPublishedByCategoryClass($class);
 
-	/**
-	 * Returns last item inserted id
-	 * 
-	 * @return integer
-	 */
-	public function getLastId();
+    /**
+     * Returns last item inserted id
+     * 
+     * @return integer
+     */
+    public function getLastId();
 
-	/**
-	 * Adds an item
-	 * 
-	 * @param array $form Form data
-	 * @return boolean
-	 */
-	public function add(array $form);
+    /**
+     * Adds an item
+     * 
+     * @param array $form Form data
+     * @return boolean
+     */
+    public function add(array $form);
 
-	/**
-	 * Updates an item
-	 * 
-	 * @param array $data
-	 * @return boolean
-	 */
-	public function update(array $data);
+    /**
+     * Updates an item
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function update(array $data);
 
-	/**
-	 * Deletes an item by its associated id
-	 * 
-	 * @param string $id Item id
-	 * @return boolean
-	 */
-	public function deleteById($id);
+    /**
+     * Deletes an item by its associated id
+     * 
+     * @param string $id Item id
+     * @return boolean
+     */
+    public function deleteById($id);
 
-	/**
-	 * Fetches an item bag by its associated id
-	 * 
-	 * @param string $id
-	 * @return object
-	 */
-	public function fetchById($id);
+    /**
+     * Fetches an item bag by its associated id
+     * 
+     * @param string $id
+     * @return object
+     */
+    public function fetchById($id);
 }

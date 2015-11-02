@@ -20,176 +20,176 @@ use Krystal\Security\Filter;
 
 final class CategoryManager extends AbstractManager implements CategoryManagerInterface
 {
-	/**
-	 * Any mapper which implements CategoryMapperInterface
-	 * 
-	 * @var \Menu\Storage\CategoryMapperInterface
-	 */
-	private $categoryMapper;
+    /**
+     * Any mapper which implements CategoryMapperInterface
+     * 
+     * @var \Menu\Storage\CategoryMapperInterface
+     */
+    private $categoryMapper;
 
-	/**
-	 * Any mapper which implements ItemMapperInterface
-	 * 
-	 * @var \Menu\Storage\ItemMapperInterface
-	 */
-	private $itemMapper;
+    /**
+     * Any mapper which implements ItemMapperInterface
+     * 
+     * @var \Menu\Storage\ItemMapperInterface
+     */
+    private $itemMapper;
 
-	/**
-	 * History manager is responsible for keeping track of latest actions
-	 * 
-	 * @var \Cms\Service\HistoryManagerInterface
-	 */
-	private $historyManager;
+    /**
+     * History manager is responsible for keeping track of latest actions
+     * 
+     * @var \Cms\Service\HistoryManagerInterface
+     */
+    private $historyManager;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Menu\Storage\CategoryMapperInterface $categoryMapper
-	 * @param \Menu\Storage\ItemMapperInterface $itemMapper
-	 * @param \Cms\Service\HistoryManagerInterface $historyManager
-	 * @return void
-	 */
-	public function __construct(CategoryMapperInterface $categoryMapper, ItemMapperInterface $itemMapper, HistoryManagerInterface $historyManager)
-	{
-		$this->categoryMapper = $categoryMapper;
-		$this->itemMapper = $itemMapper;
-		$this->historyManager = $historyManager;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Menu\Storage\CategoryMapperInterface $categoryMapper
+     * @param \Menu\Storage\ItemMapperInterface $itemMapper
+     * @param \Cms\Service\HistoryManagerInterface $historyManager
+     * @return void
+     */
+    public function __construct(CategoryMapperInterface $categoryMapper, ItemMapperInterface $itemMapper, HistoryManagerInterface $historyManager)
+    {
+        $this->categoryMapper = $categoryMapper;
+        $this->itemMapper = $itemMapper;
+        $this->historyManager = $historyManager;
+    }
 
-	/**
-	 * Fetches maximal category's depth level
-	 * 
-	 * @param string $id Category id
-	 * @return integer
-	 */
-	public function fetchMaxDepthById($id)
-	{
-		return $this->categoryMapper->fetchMaxDepthById($id);
-	}
+    /**
+     * Fetches maximal category's depth level
+     * 
+     * @param string $id Category id
+     * @return integer
+     */
+    public function fetchMaxDepthById($id)
+    {
+        return $this->categoryMapper->fetchMaxDepthById($id);
+    }
 
-	/**
-	 * Fetches the first category id
-	 * 
-	 * @return string
-	 */
-	public function fetchFirstId()
-	{
-		return $this->categoryMapper->fetchFirstId();
-	}
+    /**
+     * Fetches the first category id
+     * 
+     * @return string
+     */
+    public function fetchFirstId()
+    {
+        return $this->categoryMapper->fetchFirstId();
+    }
 
-	/**
-	 * Fetches the last inserted id
-	 * 
-	 * @return integer
-	 */
-	public function fetchLastId()
-	{
-		return $this->categoryMapper->fetchLastId();
-	}
+    /**
+     * Fetches the last inserted id
+     * 
+     * @return integer
+     */
+    public function fetchLastId()
+    {
+        return $this->categoryMapper->fetchLastId();
+    }
 
-	/**
-	 * Returns last inserted id
-	 * 
-	 * @return integer
-	 */
-	public function getLastId()
-	{
-		return $this->categoryMapper->getLastId();
-	}
+    /**
+     * Returns last inserted id
+     * 
+     * @return integer
+     */
+    public function getLastId()
+    {
+        return $this->categoryMapper->getLastId();
+    }
 
-	/**
-	 * Fetches unique category classes
-	 * 
-	 * @return array
-	 */
-	public function fetchClasses()
-	{
-		return $this->categoryMapper->fetchClasses();
-	}
+    /**
+     * Fetches unique category classes
+     * 
+     * @return array
+     */
+    public function fetchClasses()
+    {
+        return $this->categoryMapper->fetchClasses();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function toEntity(array $category)
-	{
-		$entity = new VirtualEntity();
-		$entity->setId((int) $category['id'])
-			->setName(Filter::escape($category['name']))
-			->setClass(Filter::escape($category['class']))
-			->setMaxDepth((int) $category['max_depth']);
+    /**
+     * {@inheritDoc}
+     */
+    protected function toEntity(array $category)
+    {
+        $entity = new VirtualEntity();
+        $entity->setId((int) $category['id'])
+            ->setName(Filter::escape($category['name']))
+            ->setClass(Filter::escape($category['class']))
+            ->setMaxDepth((int) $category['max_depth']);
 
-		return $entity;
-	}
+        return $entity;
+    }
 
-	/**
-	 * Adds a category
-	 * 
-	 * @param array $input
-	 * @return boolean
-	 */
-	public function add(array $input)
-	{
-		$this->track('Category menu "%s" has been created', $input['name']);
-		return $this->categoryMapper->insert($input);
-	}
+    /**
+     * Adds a category
+     * 
+     * @param array $input
+     * @return boolean
+     */
+    public function add(array $input)
+    {
+        $this->track('Category menu "%s" has been created', $input['name']);
+        return $this->categoryMapper->insert($input);
+    }
 
-	/**
-	 * Updates a category
-	 * 
-	 * @param array $data
-	 * @return boolean
-	 */
-	public function update(array $data)
-	{
-		$this->track('Category menu "%s" has been updated', $data['name']);
-		return $this->categoryMapper->update($data);
-	}
+    /**
+     * Updates a category
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function update(array $data)
+    {
+        $this->track('Category menu "%s" has been updated', $data['name']);
+        return $this->categoryMapper->update($data);
+    }
 
-	/**
-	 * Deletes a category by its associated id
-	 * Also remove items associated with given category id
-	 * 
-	 * @param string $id
-	 * @return boolean Depending on success
-	 */
-	public function deleteById($id)
-	{
-		$name = Filter::escape($this->categoryMapper->fetchNameById($id));
+    /**
+     * Deletes a category by its associated id
+     * Also remove items associated with given category id
+     * 
+     * @param string $id
+     * @return boolean Depending on success
+     */
+    public function deleteById($id)
+    {
+        $name = Filter::escape($this->categoryMapper->fetchNameById($id));
 
-		$this->track('Category menu "%s" has been removed', $name);
-		return $this->categoryMapper->deleteById($id) && $this->itemMapper->deleteAllByCategoryId($id);
-	}
+        $this->track('Category menu "%s" has been removed', $name);
+        return $this->categoryMapper->deleteById($id) && $this->itemMapper->deleteAllByCategoryId($id);
+    }
 
-	/**
-	 * Tracks activity
-	 * 
-	 * @param string $message
-	 * @param string $placeholder
-	 * @return boolean
-	 */
-	private function track($message, $placeholder = '')
-	{
-		return $this->historyManager->write('Menu', $message, $placeholder);
-	}
+    /**
+     * Tracks activity
+     * 
+     * @param string $message
+     * @param string $placeholder
+     * @return boolean
+     */
+    private function track($message, $placeholder = '')
+    {
+        return $this->historyManager->write('Menu', $message, $placeholder);
+    }
 
-	/**
-	 * Fetches all category entities
-	 * 
-	 * @return array
-	 */
-	public function fetchAll()
-	{
-		return $this->prepareResults($this->categoryMapper->fetchAll());
-	}
+    /**
+     * Fetches all category entities
+     * 
+     * @return array
+     */
+    public function fetchAll()
+    {
+        return $this->prepareResults($this->categoryMapper->fetchAll());
+    }
 
-	/**
-	 * Fetches a category bag by its associated id
-	 * 
-	 * @param string $id
-	 * @return array
-	 */
-	public function fetchById($id)
-	{
-		return $this->prepareResult($this->categoryMapper->fetchById($id));
-	}
+    /**
+     * Fetches a category bag by its associated id
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        return $this->prepareResult($this->categoryMapper->fetchById($id));
+    }
 }

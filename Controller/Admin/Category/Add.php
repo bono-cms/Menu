@@ -15,45 +15,44 @@ use Krystal\Stdlib\VirtualEntity;
 
 final class Add extends AbstractCategory
 {
-	/**
-	 * Shows adding form
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		$this->loadSharedPlugins();
+    /**
+     * Shows adding form
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->loadSharedPlugins();
+        $this->loadBreadcrumbs('Add a category');
 
-		$category = new VirtualEntity();
-		$category->setMaxDepth(5);
+        $category = new VirtualEntity();
+        $category->setMaxDepth(5);
 
-		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
-			'title' => 'Add a category',
-			'category' => $category
-		)));
-	}
+        return $this->view->render($this->getTemplatePath(), array(
+            'title' => 'Add a category',
+            'category' => $category
+        ));
+    }
 
-	/**
-	 * Adds a category
-	 * 
-	 * @return string
-	 */
-	public function addAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('category'));
+    /**
+     * Adds a category
+     * 
+     * @return string
+     */
+    public function addAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('category'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			$categoryManager = $this->getCategoryManager();
-			$categoryManager->add($this->request->getPost('category'));
+            $categoryManager = $this->getCategoryManager();
+            $categoryManager->add($this->request->getPost('category'));
 
-			$this->flashBag->set('success', 'Category has been created successfully');
+            $this->flashBag->set('success', 'Category has been created successfully');
+            return $categoryManager->getLastId();
 
-			return $categoryManager->getLastId();
-
-		} else {
-
-			return $formValidator->getErrors();
-		}
-	}
+        } else {
+            return $formValidator->getErrors();
+        }
+    }
 }

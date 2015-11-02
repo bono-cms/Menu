@@ -17,67 +17,67 @@ use Krystal\Application\View\ViewManagerInterface;
 
 final class SiteBootstrapper implements SiteBootstrapperInterface
 {
-	/**
-	 * Module manager to grab data
-	 * 
-	 * @var \Krystal\Application\Module\ModuleManagerInterface
-	 */
-	private $moduleManager;
+    /**
+     * Module manager to grab data
+     * 
+     * @var \Krystal\Application\Module\ModuleManagerInterface
+     */
+    private $moduleManager;
 
-	/**
-	 * View manager whose state would be altered
-	 * 
-	 * @var \Krystal\Application\View\ViewManagerInterface
-	 */
-	private $view;
+    /**
+     * View manager whose state would be altered
+     * 
+     * @var \Krystal\Application\View\ViewManagerInterface
+     */
+    private $view;
 
-	/**
-	 * Theme's configuration
-	 * 
-	 * @var array
-	 */
-	private $config;
+    /**
+     * Theme's configuration
+     * 
+     * @var array
+     */
+    private $config;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
-	 * @param \Krystal\Application\View\ViewManagerInterface $view
-	 * @param array $config
-	 * @return void
-	 */
-	public function __construct(ModuleManagerInterface $moduleManager, ViewManagerInterface $view, array $config)
-	{
-		$this->moduleManager = $moduleManager;
-		$this->view = $view;
-		$this->config = $config;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
+     * @param \Krystal\Application\View\ViewManagerInterface $view
+     * @param array $config
+     * @return void
+     */
+    public function __construct(ModuleManagerInterface $moduleManager, ViewManagerInterface $view, array $config)
+    {
+        $this->moduleManager = $moduleManager;
+        $this->view = $view;
+        $this->config = $config;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function bootstrap()
-	{
-		$homeWebPageId = $this->moduleManager->getModule('Pages')->getService('pageManager')->getDefaultWebPageId();
-		$this->view->addVariable('menu', $this->getSiteService($homeWebPageId));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function bootstrap()
+    {
+        $homeWebPageId = $this->moduleManager->getModule('Pages')->getService('pageManager')->getDefaultWebPageId();
+        $this->view->addVariable('menu', $this->getSiteService($homeWebPageId));
+    }
 
-	/**
-	 * Returns menu's block service
-	 * 
-	 * @param string $homeWebPageId $homeWebPageId
-	 * @return \Menu\Service\Block
-	 */
-	private function getSiteService($homeWebPageId)
-	{
-		$block = $this->moduleManager->getModule('Menu')->getService('siteService');
-		$block->setHomeWebPageId($homeWebPageId);
+    /**
+     * Returns menu's block service
+     * 
+     * @param string $homeWebPageId $homeWebPageId
+     * @return \Menu\Service\Block
+     */
+    private function getSiteService($homeWebPageId)
+    {
+        $block = $this->moduleManager->getModule('Menu')->getService('siteService');
+        $block->setHomeWebPageId($homeWebPageId);
 
-		// If we have menu configuration
-		if (isset($this->config['menu']) && is_array($this->config['menu'])) {
-			$block->register($this->config['menu']);
-		}
+        // If we have menu configuration
+        if (isset($this->config['menu']) && is_array($this->config['menu'])) {
+            $block->register($this->config['menu']);
+        }
 
-		return $block;
-	}
+        return $block;
+    }
 }

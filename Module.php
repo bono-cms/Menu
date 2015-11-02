@@ -21,34 +21,34 @@ use Menu\Contract\MenuAwareManager;
 
 final class Module extends AbstractCmsModule
 {
-	/**
-	 * Returns definitions for links
-	 * 
-	 * @return array
-	 */
-	public function getLinkDefinitions()
-	{
-		return include(__DIR__ . '/Config/menu.links.php');
-	}
+    /**
+     * Returns definitions for links
+     * 
+     * @return array
+     */
+    public function getLinkDefinitions()
+    {
+        return include(__DIR__ . '/Config/menu.links.php');
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getServiceProviders()
-	{
-		$itemMapper = $this->getMapper('/Menu/Storage/MySQL/ItemMapper');
-		$categoryMapper = $this->getMapper('/Menu/Storage/MySQL/CategoryMapper');
+    /**
+     * {@inheritDoc}
+     */
+    public function getServiceProviders()
+    {
+        $itemMapper = $this->getMapper('/Menu/Storage/MySQL/ItemMapper');
+        $categoryMapper = $this->getMapper('/Menu/Storage/MySQL/CategoryMapper');
 
-		$historyManager = $this->getHistoryManager();
-		$webPageManager = $this->getWebPageManager();
+        $historyManager = $this->getHistoryManager();
+        $webPageManager = $this->getWebPageManager();
 
-		return array(
+        return array(
 
-			'menuWidget' => new MenuWidget($itemMapper),
-			'siteService' => new SiteService($itemMapper, $categoryMapper, $webPageManager),
-			'linkBuilder' => new LinkBuilder($webPageManager),
-			'itemManager' => new ItemManager($itemMapper, $categoryMapper, $historyManager),
-			'categoryManager' => new CategoryManager($categoryMapper, $itemMapper, $historyManager)
-		);
-	}
+            'menuWidget' => new MenuWidget($itemMapper),
+            'siteService' => new SiteService($itemMapper, $categoryMapper, $webPageManager),
+            'linkBuilder' => new LinkBuilder($webPageManager),
+            'itemManager' => new ItemManager($itemMapper, $categoryMapper, $historyManager),
+            'categoryManager' => new CategoryManager($categoryMapper, $itemMapper, $historyManager)
+        );
+    }
 }

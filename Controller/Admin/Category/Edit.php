@@ -13,49 +13,46 @@ namespace Menu\Controller\Admin\Category;
 
 final class Edit extends AbstractCategory
 {
-	/**
-	 * Shows edit form
-	 * 
-	 * @param string $id Category id
-	 * @return string
-	 */
-	public function indexAction($id)
-	{
-		$category = $this->getCategoryManager()->fetchById($id);
+    /**
+     * Shows edit form
+     * 
+     * @param string $id Category id
+     * @return string
+     */
+    public function indexAction($id)
+    {
+        $category = $this->getCategoryManager()->fetchById($id);
 
-		if ($category !== false) {
-			$this->loadSharedPlugins();
+        if ($category !== false) {
+            $this->loadSharedPlugins();
+            $this->loadBreadcrumbs('Edit the category');
 
-			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
-				'category' => $category,
-				'title' => 'Edit the category'
-			)));
+            return $this->view->render($this->getTemplatePath(), array(
+                'category' => $category,
+                'title' => 'Edit the category'
+            ));
 
-		} else {
+        } else {
+            return false;
+        }
+    }
 
-			return false;
-		}
-	}
+    /**
+     * Updates a category
+     * 
+     * @return string
+     */
+    public function updateAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('category'));
 
-	/**
-	 * Updates a category
-	 * 
-	 * @return string
-	 */
-	public function updateAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('category'));
+        if ($formValidator->isValid()) {
+            $this->getCategoryManager()->update($this->request->getPost('category'));
+            $this->flashBag->set('success', 'Category has been updated successfully');
+            return '1';
 
-		if ($formValidator->isValid()) {
-
-			$this->getCategoryManager()->update($this->request->getPost('category'));
-			$this->flashBag->set('success', 'Category has been updated successfully');
-
-			return '1';
-
-		} else {
-
-			return $formValidator->getErrors();
-		}
-	}
+        } else {
+            return $formValidator->getErrors();
+        }
+    }
 }

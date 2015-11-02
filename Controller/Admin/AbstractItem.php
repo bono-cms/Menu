@@ -17,108 +17,110 @@ use Menu\View\Nestedable;
 
 abstract class AbstractItem extends AbstractAdminController
 {
-	/**
-	 * Fetches maximal allowed nested level depth
-	 * 
-	 * @param string $id Category id
-	 * @return integer
-	 */
-	final protected function getMaxNestedDepth($id)
-	{
-		return $this->getCategoryManager()->fetchMaxDepthById($id);
-	}
+    /**
+     * Fetches maximal allowed nested level depth
+     * 
+     * @param string $id Category id
+     * @return integer
+     */
+    final protected function getMaxNestedDepth($id)
+    {
+        return $this->getCategoryManager()->fetchMaxDepthById($id);
+    }
 
-	/**
-	 * Returns template path
-	 * 
-	 * @return string
-	 */
-	final protected function getTemplatePath()
-	{
-		return 'browser';
-	}
+    /**
+     * Returns template path
+     * 
+     * @return string
+     */
+    final protected function getTemplatePath()
+    {
+        return 'browser';
+    }
 
-	/**
-	 * Loads shared plugins
-	 * 
-	 * @return void
-	 */
-	final protected function loadSharedPlugins()
-	{
-		$this->view->getPluginBag()
-					->appendScripts(array(
-						$this->getWithAssetPath('/nestable/jquery.nestable.js'),
-						$this->getWithAssetPath('/plugins/chosen/chosen.jquery.min.js', 'Cms'),
-						$this->getWithAssetPath('/admin/module.menu.js')
-					))
-					->appendStylesheets(array(
-						$this->getWithAssetPath('/nestable/jquery.nestable.css'),
-						$this->getWithAssetPath('/plugins/chosen/chosen.css', 'Cms'),
-						$this->getWithAssetPath('/plugins/chosen/chosen-bootstrap.css', 'Cms')
-					));
-	}
+    /**
+     * Loads shared plugins
+     * 
+     * @return void
+     */
+    final protected function loadSharedPlugins()
+    {
+        $this->view->getPluginBag()
+                    ->appendScripts(array(
 
-	/**
-	 * Returns prepared tree builder
-	 * 
-	 * @param string $categoryId
-	 * @return \Krystal\Tree\AdjacencyList\TreeBuilder
-	 */
-	final protected function getTreeBuilder($categoryId)
-	{
-		return new TreeBuilder($this->getItemManager()->fetchAllByCategoryId($categoryId));
-	}
+                        '@Menu/nestable/jquery.nestable.js',
+                        '@Cms/plugins/chosen/chosen.jquery.min.js',
+                        '@Menu/admin/module.menu.js'
+                        
+                    ))->appendStylesheets(array(
 
-	/**
-	 * Returns shared variables
-	 * 
-	 * @param string $categoryId
-	 * @param array $overrides
-	 * @param string $active Active item
-	 * @return array
-	 */
-	final protected function getWithSharedVars($categoryId, array $overrides, $active = null)
-	{
-		$treeBuilder = $this->getTreeBuilder($categoryId);
+                        '@Menu/nestable/jquery.nestable.css',
+                        '@Cms/plugins/chosen/chosen.css',
+                        '@Cms/plugins/chosen/chosen-bootstrap.css'
+                    ));
+    }
 
-		$this->view->getBreadcrumbBag()->add(array(
-			array(
-				'link' => '#',
-				'name' => 'Menu'
-			)
-		));
+    /**
+     * Returns prepared tree builder
+     * 
+     * @param string $categoryId
+     * @return \Krystal\Tree\AdjacencyList\TreeBuilder
+     */
+    final protected function getTreeBuilder($categoryId)
+    {
+        return new TreeBuilder($this->getItemManager()->fetchAllByCategoryId($categoryId));
+    }
 
-		$vars = array(
-			'title' => 'Menu',
+    /**
+     * Returns shared variables
+     * 
+     * @param string $categoryId
+     * @param array $overrides
+     * @param string $active Active item
+     * @return array
+     */
+    final protected function getWithSharedVars($categoryId, array $overrides, $active = null)
+    {
+        $treeBuilder = $this->getTreeBuilder($categoryId);
 
-			// Collect link from services now
-			'links'		 =>	$this->getLinkBuilder()->collect(),
-			'itemsBlock' => $treeBuilder->render(new Nestedable(), $active),
-			'items'		 =>	$treeBuilder->render(new PhpArray('name'), $active),
-			'categories' => $this->getCategoryManager()->fetchAll(),
-		);
+        $this->view->getBreadcrumbBag()->add(array(
+            array(
+                'link' => '#',
+                'name' => 'Menu'
+            )
+        ));
 
-		return array_replace_recursive($vars, $overrides);
-	}
+        $vars = array(
+            'title' => 'Menu',
 
-	/**
-	 * Fetches last category id
-	 * 
-	 * @return integer
-	 */
-	final protected function getLastCategoryId()
-	{
-		return $this->getCategoryManager()->fetchLastId();
-	}
+            // Collect link from services now
+            'links'      => $this->getLinkBuilder()->collect(),
+            'itemsBlock' => $treeBuilder->render(new Nestedable(), $active),
+            'items'      => $treeBuilder->render(new PhpArray('name'), $active),
+            'categories' => $this->getCategoryManager()->fetchAll(),
+        );
 
-	/**
-	 * Fetches dummy item bag
-	 * 
-	 * @param string $categoryId
-	 * @return \ItemBag
-	 */
-	final protected function getDummyItemBag($categoryId, $parentId = null)
-	{
-		return $this->getItemManager()->fetchDummy($categoryId, $parentId);
-	}
+        return array_replace_recursive($vars, $overrides);
+    }
+
+    /**
+     * Fetches last category id
+     * 
+     * @return integer
+     */
+    final protected function getLastCategoryId()
+    {
+        return $this->getCategoryManager()->fetchLastId();
+    }
+
+    /**
+     * Fetches dummy item bag
+     * 
+     * @param string $categoryId
+     * @return \ItemBag
+     */
+    final protected function getDummyItemBag($categoryId, $parentId = null)
+    {
+        return $this->getItemManager()->fetchDummy($categoryId, $parentId);
+    }
 }

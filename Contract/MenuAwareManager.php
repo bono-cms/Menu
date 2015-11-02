@@ -16,11 +16,11 @@ namespace Menu\Contract;
  */
 interface MenuAwareManager
 {
-	/**
-	 * This is only used in browser, when we need to show slug=> title pair is select-box
-	 * 
-	 * @param integer $webPageId
-	 * @return string
-	 */
-	public function fetchTitleByWebPageId($webPageId);
+    /**
+     * This is only used in browser, when we need to show slug=> title pair is select-box
+     * 
+     * @param integer $webPageId
+     * @return string
+     */
+    public function fetchTitleByWebPageId($webPageId);
 }
