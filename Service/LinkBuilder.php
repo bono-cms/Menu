@@ -81,7 +81,7 @@ final class LinkBuilder implements LinkBuilderInterface
      * Returns a service
      * 
      * @param string $module
-     * @return object
+     * @return object|boolean
      */
     public function getService($module)
     {
