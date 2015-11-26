@@ -33,7 +33,7 @@ abstract class AbstractItemService extends AbstractManager
             ->setHint(Filter::escape($item['hint']))
             ->setOpenInNewWindow((bool) $item['open_in_new_window'])
             ->setPublished((bool) $item['published']);
-            
+
         return $entity;
     }
 
