@@ -164,7 +164,7 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
      * Fetches item's entity by its associated id
      * 
      * @param string $id
-     * @return object
+     * @return \Krystal\Stdlib\VirtualEntity
      */
     public function fetchById($id)
     {
