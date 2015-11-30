@@ -120,7 +120,6 @@ final class SiteService implements SiteServiceInterface
 
             if ($renderer instanceof WebPageAwareRendererInterface) {
                 $renderer->setWebPageManager($this->webPageManager);
-
                 if ($this->homeWebPageId !== null) {
                     $renderer->setHomeWebPageId($this->homeWebPageId);
                 }
@@ -155,10 +154,8 @@ final class SiteService implements SiteServiceInterface
     public function renderByClass($class, $webPageId = null)
     {
         if (isset($this->blocks[$class])) {
-
             $tree = $this->blocks[$class];
             return $tree->render(null, $webPageId);
-
         } else {
             return false;
         }
