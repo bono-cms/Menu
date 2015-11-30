@@ -254,7 +254,7 @@ final class MenuWidget extends AbstractItemService implements MenuWidgetInterfac
                 // Current key and value
                 $key =& $keys[$k];
                 $value =& $array[$key][$i];
-                
+
                 $output[$i][$key] = $value;
             }
         }
