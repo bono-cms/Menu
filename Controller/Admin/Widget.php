@@ -72,19 +72,15 @@ final class Widget extends AbstractItem
         }
 
         return $this->view->disableLayout()->render('widget', array(
-
             'attached' => json_encode($menuWidget->getIdsFromEntities($items)),
             'items' => $items,
             'categories' => $categories,
-
             // Fetch items of first category
             'parentItems' => $this->getWithPrependedEmpty($this->getTreeBuilder($categoryId)->render(new PhpArray('name'))),
-
             'publishOptions' => array(
                 '1' => "Yes, publish immediately",
                 '0' => "No, don't publish now"
             ),
-            
             'newWindowOptions' => array(
                 '0' => 'Open in the same window',
                 '1' => 'Open in new window'
