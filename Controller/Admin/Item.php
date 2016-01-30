@@ -12,9 +12,61 @@
 namespace Menu\Controller\Admin;
 
 use Krystal\Tree\AdjacencyList\Render\PhpArray;
+use Menu\View\Nestedable;
 
-final class Item extends AbstractItem
+final class Item extends AbstractAdminController
 {
+    /**
+     * Creates a form
+     * 
+     * @param \Krystal\Stdlib\VirtualEntity $item
+     * @param string $title
+     * @param string $categoryId
+     * @param string $active
+     * @return string
+     */
+    private function createForm($item, $title, $categoryId, $active = null)
+    {
+        // Load view plugins
+        $this->view->getPluginBag()
+                    ->appendScripts(array(
+                        '@Menu/nestable/jquery.nestable.js',
+                        '@Cms/plugins/chosen/chosen.jquery.min.js',
+                        '@Menu/admin/module.menu.js'
+                    ))->appendStylesheets(array(
+                        '@Menu/nestable/jquery.nestable.css',
+                        '@Cms/plugins/chosen/chosen.css',
+                        '@Cms/plugins/chosen/chosen-bootstrap.css'
+                    ));
+
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Menu');
+
+        $treeBuilder = $this->getTreeBuilder($categoryId);
+
+        return $this->view->render('browser', array(
+            'links' => $this->getLinkBuilder()->collect(),
+            'itemsBlock' => $treeBuilder->render(new Nestedable(), $active),
+            'items'  => $treeBuilder->render(new PhpArray('name'), $active),
+            'categories' => $this->getCategoryManager()->fetchAll(),
+            'maxDepth' => $this->getCategoryManager()->fetchMaxDepthById($categoryId),
+            'helper_title' => $title,
+            'item' => $item
+        ));
+    }
+
+    /**
+     * Fetches dummy item bag
+     * 
+     * @param string $categoryId
+     * @return \ItemBag
+     */
+    private function getDummyItemBag($categoryId, $parentId = null)
+    {
+        return $this->getItemManager()->fetchDummy($categoryId, $parentId);
+    }
+
     /**
      * Shows main form, selecting parent item id
      * 
@@ -24,16 +76,8 @@ final class Item extends AbstractItem
      */
     public function addChildAction($categoryId, $parentId)
     {
-        $this->loadSharedPlugins();
-
-        return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars($categoryId, array(
-            'maxDepth' => $this->getMaxNestedDepth($categoryId),
-
-            // Tells whether we in edit mode. By using this variable we can re-use the same template
-            'editing' => false,
-            'helper_title' => 'Add new item',
-            'item' => $this->getDummyItemBag($categoryId, $parentId)
-        )));
+        $item = $this->getDummyItemBag($categoryId, $parentId);
+        return $this->createForm($item, 'Add new item', $categoryId);
     }
 
     /**
@@ -46,7 +90,7 @@ final class Item extends AbstractItem
     {
         // When its null, then we are on default page
         if (is_null($categoryId)) {
-            $categoryId = $this->getLastCategoryId();
+            $categoryId = $this->getCategoryManager()->fetchLastId();
         }
 
         if ($categoryId) {
@@ -55,17 +99,8 @@ final class Item extends AbstractItem
             }
         }
 
-        $this->loadSharedPlugins();
-
-        return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars($categoryId, array(
-
-            'maxDepth' => $this->getMaxNestedDepth($categoryId),
-
-            // Tells whether we in edit mode. By using this variable we can re-use the same template
-            'editing' => false,
-            'helper_title' => 'Add new item',
-            'item' => $this->getDummyItemBag($categoryId)
-        )));
+        $item = $this->getDummyItemBag($categoryId);
+        return $this->createForm($item, 'Add new item', $categoryId);
     }
 
     /**
@@ -90,20 +125,8 @@ final class Item extends AbstractItem
         // Try to grab item's entity
         $item = $this->getItemManager()->fetchById($id);
 
-        // If it's not false, then id is valid
         if ($item !== false) {
-            $this->loadSharedPlugins();
-
-            return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars($item->getCategoryId(), array(
-
-                'maxDepth' => $this->getMaxNestedDepth($item->getCategoryId()),
-                'item' => $item,
-                // Tells whether we in edit mode. By using this variable we can re-use the same template
-                'editing' => true,
-                'helper_title' => 'Edit the item',
-
-            ), $id));
-
+            return $this->createForm($item, 'Edit the item', $item->getCategoryId(), $id);
         } else {
             return false;
         }
@@ -159,33 +182,10 @@ final class Item extends AbstractItem
     public function deleteAction()
     {
         if ($this->request->hasPost('id')) {
-
             $id = $this->request->getPost('id');
 
             $this->getItemManager()->deleteById($id);
             $this->flashBag->set('success', 'The item has been removed successfully!');
-
-            return '1';
-        }
-    }
-
-    /**
-     * Deletes a category by its associated id
-     * 
-     * @return string
-     */
-    public function deleteCategoryAction()
-    {
-        if ($this->request->hasPost('id')) {
-
-            $id = $this->request->getPost('id');
-
-            // Grab a service
-            $categoryManager = $this->moduleManager->getModule('Menu')->getService('categoryManager');
-            $categoryManager->deleteById($id);
-
-            $this->flashBag->set('success', 'The category has been removed successfully');
-
             return '1';
         }
     }

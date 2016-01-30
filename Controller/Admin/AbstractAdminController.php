@@ -12,6 +12,7 @@
 namespace Menu\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
+use Krystal\Tree\AdjacencyList\TreeBuilder;
 
 abstract class AbstractAdminController extends AbstractController
 {
@@ -43,6 +44,17 @@ abstract class AbstractAdminController extends AbstractController
     final protected function getItemManager()
     {
         return $this->getModuleService('itemManager');
+    }
+
+    /**
+     * Returns prepared tree builder
+     * 
+     * @param string $categoryId
+     * @return \Krystal\Tree\AdjacencyList\TreeBuilder
+     */
+    final protected function getTreeBuilder($categoryId)
+    {
+        return new TreeBuilder($this->getItemManager()->fetchAllByCategoryId($categoryId));
     }
 
     /**

@@ -33,22 +33,13 @@ return array(
         'controller'    => 'Admin:Item@viewAction'
     ),
     
-    '/admin/module/menu/item/delete.ajax' => array(
+    '/admin/module/menu/item/delete' => array(
         'controller' => 'Admin:Item@deleteAction',
         'disallow' => array('guest')
     ),
     
     '/admin/module/menu/item/edit.ajax' => array(
         'controller' => 'Admin:Item@updateAction',
-        'disallow' => array('guest')
-    ),
-    
-    '/admin/module/menu/browse/category/(:var)' => array(
-        'controller' => 'Admin:Item@categoryAction'
-    ),
-    
-    '/admin/module/menu/category/delete.ajax' => array(
-        'controller' => 'Admin:Item@deleteCategoryAction',
         'disallow' => array('guest')
     ),
     
@@ -63,22 +54,26 @@ return array(
     '/admin/module/menu/widget/load/(:var)' => array(
         'controller' => 'Admin:Widget@loadWigdetAction',
     ),
-    
-    '/admin/module/menu/category/add' => array(
-        'controller' => 'Admin:Category:Add@indexAction'
-    ),
-    
-    '/admin/module/menu/category/add.ajax' => array(
-        'controller' => 'Admin:Category:Add@addAction',
+
+    '/admin/module/menu/category/delete' => array(
+        'controller' => 'Admin:Category@deleteAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/menu/category/edit/(:var)' => array(
-        'controller' => 'Admin:Category:Edit@indexAction'
+    '/admin/module/menu/browse/category/(:var)' => array(
+        'controller' => 'Admin:Item@categoryAction'
     ),
     
-    '/admin/module/menu/category/edit.ajax' => array(
-        'controller' => 'Admin:Category:Edit@updateAction',
+    '/admin/module/menu/category/add' => array(
+        'controller' => 'Admin:Category@addAction'
+    ),
+    
+    '/admin/module/menu/category/edit/(:var)' => array(
+        'controller' => 'Admin:Category@editAction'
+    ),
+    
+    '/admin/module/menu/category/save' => array(
+        'controller' => 'Admin:Category@saveAction',
         'disallow' => array('guest')
     )
 );

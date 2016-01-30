@@ -86,7 +86,7 @@ use Krystal\Form\HtmlHelper;
 					  </div>
 					</div>
 
-					<?php if (!$editing): ?>
+					<?php if (!$item->getId()): ?>
 
 					<div class="form-group">
 					  <label for="select" class="col-lg-2 control-label"><?php $this->show('Parent item'); ?></label>
@@ -150,25 +150,24 @@ use Krystal\Form\HtmlHelper;
 		
 		<div class="pull-right">
 			
-			<?php if ($editing): ?>
+			<?php if ($item->getId()): ?>
 			
 			<div class="btn-group">
 			  <a class="btn btn-primary" data-button="save"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></a>
 			  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-			  
 			  <ul class="dropdown-menu">
 				<li><a href="#" data-button="save-create"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></a></li>
 				<li><a href="#" data-button="save-exit"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Exit'); ?></a></li>
 			  </ul>
 			</div>
 			
-			<button class="btn btn-primary" data-button="remove" data-category="item" data-id="<?php echo $item->getId(); ?>"><span class="glyphicon glyphicon-floppy-save"></span> <?php echo $this->translate('Remove'); ?></button>
+			<button class="btn btn-primary" data-button="remove" data-category="item" data-id="<?php echo $item->getId(); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Remove'); ?></button>
 			<button class="btn btn-default" data-button="cancel"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Cancel'); ?></button>
 			
 			<?php else: ?>
 			
 			<div class="btn-group pull-right">
-			  <button type="submit" class="btn btn-primary" data-button="add"><span class="glyphicon glyphicon-floppy-save"></span> <?php $this->show('Add'); ?></button>
+			  <button type="submit" class="btn btn-primary" data-button="add"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 			  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 			  
 			  <ul class="dropdown-menu">
@@ -251,7 +250,7 @@ use Krystal\Form\HtmlHelper;
 	<?php if ($extendedMode): ?>
 	
 	<div class="pull-left">
-		<a href="<?php echo $this->url('Menu:Admin:Category:Add@indexAction'); ?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> <?php $this->show('Add category'); ?></a>
+		<a href="<?php echo $this->url('Menu:Admin:Category@addAction'); ?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> <?php $this->show('Add category'); ?></a>
 	</div>
 	
 	<?php endif; ?>

@@ -13,7 +13,7 @@ namespace Menu\Controller\Admin;
 
 use Krystal\Tree\AdjacencyList\Render\PhpArray;
 
-final class Widget extends AbstractItem
+final class Widget extends AbstractAdminController
 {
     /**
      * Return items with empty prep-ended values

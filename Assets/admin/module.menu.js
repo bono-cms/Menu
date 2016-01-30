@@ -69,7 +69,7 @@ $(function(){
 	$.delete({
 		categories : {
 			item : {
-				url : "/admin/module/menu/item/delete.ajax",
+				url : "/admin/module/menu/item/delete",
 				success : function(response){
 					if (response == "1"){
 						toCurrentCategory();
@@ -79,7 +79,7 @@ $(function(){
 				}
 			},
 			category : {
-				url : "/admin/module/menu/category/delete.ajax",
+				url : "/admin/module/menu/category/delete",
 				success : function(response){
 					if (response == "1") {
 						toHome();

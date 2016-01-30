@@ -41,17 +41,15 @@
 				</div>
 			</div>
 		</div>
-		
 	</div>
 	
 	<?php if ($category->getId()): ?>
-	<button data-button="save" data-url="<?php echo $this->url('Menu:Admin:Category:Edit@updateAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="save" data-url="<?php echo $this->url('Menu:Admin:Category@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	
 	<?php else: ?>
 	
-	<button data-button="add" data-back-url="<?php echo $this->url('Menu:Admin:Category:Edit@indexAction', null); ?>" data-url="<?php echo $this->url('Menu:Admin:Category:Add@addAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+	<button data-button="add" data-back-url="<?php echo $this->url('Menu:Admin:Category@editAction', null); ?>" data-url="<?php echo $this->url('Menu:Admin:Category@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 	<?php endif; ?>
 	
 	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
-	
 </form>
