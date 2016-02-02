@@ -13,7 +13,7 @@ return array(
     'module' => array(
         'name'  => 'Menu',
         'url'   => '/admin/module/menu',
-        'icon'  => '/module/Menu/Assets/menu.png',
+        'icon'  => 'fa fa-bars fa-5x',
         'order' => 3,
         'description' => 'Menu modules allows you to easily handle different menus on your site'
     )
