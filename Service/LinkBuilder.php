@@ -95,7 +95,7 @@ final class LinkBuilder implements LinkBuilderInterface
     /**
      * Adds a service
      * 
-     * @param MenuAwareManager $service Any service that implements this interface
+     * @param \Menu\Contract\MenuAwareManager $service Any service that implements this interface
      * @return \Menu\Service\LinkBuilder
      */
     public function addService($module, MenuAwareManager $service)
