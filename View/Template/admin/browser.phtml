@@ -229,7 +229,7 @@ use Krystal\Form\HtmlHelper;
 				<?php if ($extendedMode): ?>
 				<td class="text-center"><?php echo $category->getClass(); ?></td>
 				<td class="text-center">
-					<a data-button="edit" href="<?php echo $this->url('Menu:Admin:Category:Edit@indexAction', $category->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit the category'); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a data-button="edit" href="<?php echo $this->url('Menu:Admin:Category@editAction', $category->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit the category'); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
 					<a data-button="delete" href="#" data-category="category" data-id="<?php echo $category->getId(); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove the category with all its items'); ?>" ><i class="glyphicon glyphicon-remove"></i></a>
 				</td>
 				<?php endif; ?>
