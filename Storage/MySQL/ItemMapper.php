@@ -21,7 +21,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
      */
     public static function getTableName()
     {
-        return 'bono_module_menu_items';
+        return self::getWithPrefix('bono_module_menu_items');
     }
 
     /**
