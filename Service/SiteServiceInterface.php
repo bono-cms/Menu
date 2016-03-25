@@ -22,14 +22,6 @@ interface SiteServiceInterface
     public function setHomeWebPageId($homeWebPageId);
 
     /**
-     * Register menu blocks
-     * 
-     * @param array $collection
-     * @return void
-     */
-    public function register(array $collection);
-
-    /**
      * Fetches menu category's name by its associated class name
      * 
      * @param string $class Menu category's class name
@@ -49,9 +41,9 @@ interface SiteServiceInterface
      * Renders menu block by category's class name
      * 
      * @param string $class
-     * @param string $webPageId Used to add active class in li elements in template views
-     * @throws \RuntimeException When attempting to read non-existing class
+     * @param object $renderer
+     * @param string $webPageId Used to add active class in <li> elements in template views
      * @return string
      */
-    public function renderByClass($class, $webPageId = null);
+    public function renderByClass($class, $webPageId, $renderer);
 }

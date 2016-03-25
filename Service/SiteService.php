@@ -42,13 +42,6 @@ final class SiteService implements SiteServiceInterface
     private $webPageManager;
 
     /**
-     * Registered menu blocks
-     * 
-     * @var array
-     */
-    private $blocks = array();
-
-    /**
      * An id of home web page id
      * 
      * @var integer
@@ -108,29 +101,6 @@ final class SiteService implements SiteServiceInterface
     }
 
     /**
-     * Register menu blocks
-     * 
-     * @param array $collection
-     * @return void
-     */
-    public function register(array $collection)
-    {
-        foreach ($collection as $class => $renderer) {
-            $tree = $this->getTreeBuilder($class);
-
-            if ($renderer instanceof WebPageAwareRendererInterface) {
-                $renderer->setWebPageManager($this->webPageManager);
-                if ($this->homeWebPageId !== null) {
-                    $renderer->setHomeWebPageId($this->homeWebPageId);
-                }
-            }
-
-            $tree->setRenderer($renderer);
-            $this->blocks[$class] = $tree;
-        }
-    }
-
-    /**
      * Renders category block associated with provided web page id
      * 
      * @param string $webPageId
@@ -148,16 +118,23 @@ final class SiteService implements SiteServiceInterface
      * Renders menu block by category's class name
      * 
      * @param string $class
+     * @param object $renderer
      * @param string $webPageId Used to add active class in <li> elements in template views
      * @return string
      */
-    public function renderByClass($class, $webPageId = null)
+    public function renderByClass($class, $webPageId, $renderer)
     {
-        if (isset($this->blocks[$class])) {
-            $tree = $this->blocks[$class];
-            return $tree->render(null, $webPageId);
-        } else {
-            return false;
+        $tree = $this->getTreeBuilder($class);
+
+        if ($renderer instanceof WebPageAwareRendererInterface) {
+            $renderer->setWebPageManager($this->webPageManager);
+
+            if ($this->homeWebPageId !== null) {
+                $renderer->setHomeWebPageId($this->homeWebPageId);
+            }
         }
+
+        $tree->setRenderer($renderer);
+        return $tree->render(null, $webPageId);
     }
 }

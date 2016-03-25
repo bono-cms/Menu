@@ -32,25 +32,16 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
     private $view;
 
     /**
-     * Theme's configuration
-     * 
-     * @var array
-     */
-    private $config;
-
-    /**
      * State initialization
      * 
      * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
      * @param \Krystal\Application\View\ViewManagerInterface $view
-     * @param array $config
      * @return void
      */
-    public function __construct(ModuleManagerInterface $moduleManager, ViewManagerInterface $view, array $config)
+    public function __construct(ModuleManagerInterface $moduleManager, ViewManagerInterface $view)
     {
         $this->moduleManager = $moduleManager;
         $this->view = $view;
-        $this->config = $config;
     }
 
     /**
@@ -59,7 +50,7 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
     public function bootstrap()
     {
         $homeWebPageId = $this->moduleManager->getModule('Pages')->getService('pageManager')->getDefaultWebPageId();
-        $this->view->addVariable('menu', $this->getSiteService($homeWebPageId));
+        $this->view->addVariable('menu', $this->createSiteService($homeWebPageId));
     }
 
     /**
@@ -68,15 +59,10 @@ final class SiteBootstrapper implements SiteBootstrapperInterface
      * @param string $homeWebPageId $homeWebPageId
      * @return \Menu\Service\Block
      */
-    private function getSiteService($homeWebPageId)
+    private function createSiteService($homeWebPageId)
     {
         $block = $this->moduleManager->getModule('Menu')->getService('siteService');
         $block->setHomeWebPageId($homeWebPageId);
-
-        // If we have menu configuration
-        if (isset($this->config['menu']) && is_array($this->config['menu'])) {
-            $block->register($this->config['menu']);
-        }
 
         return $block;
     }
