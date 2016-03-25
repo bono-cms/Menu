@@ -12,6 +12,7 @@
 namespace Menu\Controller\Admin;
 
 use Krystal\Tree\AdjacencyList\Render\PhpArray;
+use Krystal\Stdlib\VirtualEntity;
 use Menu\View\Nestedable;
 
 final class Item extends AbstractAdminController
@@ -25,7 +26,7 @@ final class Item extends AbstractAdminController
      * @param string $active
      * @return string
      */
-    private function createForm($item, $title, $categoryId, $active = null)
+    private function createForm(VirtualEntity $item, $title, $categoryId, $active = null)
     {
         // Load view plugins
         $this->view->getPluginBag()
@@ -60,7 +61,8 @@ final class Item extends AbstractAdminController
      * Fetches dummy item bag
      * 
      * @param string $categoryId
-     * @return \ItemBag
+     * @param string $parentId Optinal parent id
+     * @return \Krystal\Stdlib\VirtualEntity
      */
     private function getDummyItemBag($categoryId, $parentId = null)
     {
