@@ -37,17 +37,10 @@ interface ItemManagerInterface
      * Fetch all items associated with given category id
      * 
      * @param string $categoryId
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByCategoryId($categoryId);
-
-    /**
-     * Fetches all published items associated with given category id
-     * 
-     * @param string $categoryId
-     * @return array
-     */
-    public function fetchAllPublishedByCategoryId($categoryId);
+    public function fetchAllByCategoryId($categoryId, $published);
 
     /**
      * Fetches all published items associated with given category class

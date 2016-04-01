@@ -79,22 +79,12 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
      * Fetch all items associated with given category id
      * 
      * @param string $categoryId
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByCategoryId($categoryId)
+    public function fetchAllByCategoryId($categoryId, $published)
     {
-        return $this->itemMapper->fetchAllByCategoryId($categoryId);
-    }
-
-    /**
-     * Fetches all published items associated with given category id
-     * 
-     * @param string $categoryId
-     * @return array
-     */
-    public function fetchAllPublishedByCategoryId($categoryId)
-    {
-        return $this->itemMapper->fetchAllPublishedByCategoryId($categoryId);
+        return $this->itemMapper->fetchAllByCategoryId($categoryId, $published);
     }
 
     /**
@@ -107,7 +97,7 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
     {
         // Get associated id
         $id = $this->categoryMapper->fetchIdByClass($class);
-        return $this->fetchAllPublishedByCategoryId($id);
+        return $this->fetchAllByCategoryId($id, true);
     }
 
     /**

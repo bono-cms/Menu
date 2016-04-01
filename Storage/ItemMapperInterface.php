@@ -43,17 +43,10 @@ interface ItemMapperInterface extends ChildrenOrderSaverMapperInterface
      * Fetches all items associated with given category id
      * 
      * @param string $categoryId
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByCategoryId($categoryId);
-
-    /**
-     * Fetches all published items associated with given category id
-     * 
-     * @param string $categoryId
-     * @return array
-     */
-    public function fetchAllPublishedByCategoryId($categoryId);
+    public function fetchAllByCategoryId($categoryId, $published);
 
     /**
      * Deletes an item by its associated id

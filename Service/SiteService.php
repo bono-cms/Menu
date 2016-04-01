@@ -84,7 +84,7 @@ final class SiteService implements SiteServiceInterface
     private function getTreeBuilder($class)
     {
         $id = $this->categoryMapper->fetchIdByClass($class);
-        $data = $this->itemMapper->fetchAllPublishedByCategoryId($id);
+        $data = $this->itemMapper->fetchAllByCategoryId($id, true);
 
         return new TreeBuilder($data);
     }

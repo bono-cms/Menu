@@ -80,33 +80,22 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
      * Fetches all items associated with given category id
      * 
      * @param string $categoryId
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByCategoryId($categoryId)
+    public function fetchAllByCategoryId($categoryId, $published)
     {
-        return $this->db->select('*')
+        $db = $this->db->select('*')
                         ->from(static::getTableName())
                         ->whereEquals('lang_id', $this->getLangId())
-                        ->andWhereEquals('category_id', $categoryId)
-                        ->orderBy('range')
-                        ->queryAll();
-    }
+                        ->andWhereEquals('category_id', $categoryId);
 
-    /**
-     * Fetches all published items associated with given category id
-     * 
-     * @param string $categoryId
-     * @return array
-     */
-    public function fetchAllPublishedByCategoryId($categoryId)
-    {
-        return $this->db->select('*')
-                        ->from(static::getTableName())
-                        ->whereEquals('lang_id', $this->getLangId())
-                        ->andWhereEquals('category_id', $categoryId)
-                        ->andWhereEquals('published', '1')
-                        ->orderBy('range')
-                        ->queryAll();
+        if ($published === true) {
+            $db->andWhereEquals('published', '1');
+        }
+
+        return $db->orderBy('range')
+                  ->queryAll();
     }
 
     /**

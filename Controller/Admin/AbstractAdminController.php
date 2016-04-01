@@ -54,7 +54,7 @@ abstract class AbstractAdminController extends AbstractController
      */
     final protected function getTreeBuilder($categoryId)
     {
-        return new TreeBuilder($this->getItemManager()->fetchAllByCategoryId($categoryId));
+        return new TreeBuilder($this->getItemManager()->fetchAllByCategoryId($categoryId, false));
     }
 
     /**
