@@ -142,21 +142,6 @@ final class LinkBuilder implements LinkBuilderInterface
     }
 
     /**
-     * Separates an array by its containing key into a new array
-     * Where its separated key becomes a new key, while the rest becomes as a value
-     * 
-     * @param string $key Target key $data
-     * @param array $data
-     * @return array
-     */
-    private function separateByKey($key, array $data)
-    {
-        // There's no need to check if key exists, since this method is always called for existing keys
-        $context = $data[$key];
-        return array($context => $data);
-    }
-
-    /**
      * Drops raw data into sub-modules
      * 
      * @param array $raw Raw data that directly comes from a mapper
@@ -168,7 +153,7 @@ final class LinkBuilder implements LinkBuilderInterface
 
         foreach ($raw as $index => $collection) {
             // Extract module' name as a key and put the rest into its values
-            $target = $this->separateByKey('module', $collection);
+            $target = array($collection['module'] => $collection);
 
             foreach ($target as $module => $array) {
                 // When doesn't exist, then need to create a one
