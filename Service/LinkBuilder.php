@@ -74,7 +74,7 @@ final class LinkBuilder implements LinkBuilderInterface
         $raw = $this->webPageManager->fetchAll();
         $data = $this->process($raw);
 
-        return $this->prepareResult($data);
+        return $this->createResult($data);
     }
 
     /**
@@ -125,7 +125,7 @@ final class LinkBuilder implements LinkBuilderInterface
      * @param array $data
      * @return array
      */
-    private function prepareResult(array $data)
+    private function createResult(array $data)
     {
         $result = array();
 
@@ -175,7 +175,7 @@ final class LinkBuilder implements LinkBuilderInterface
      * @param \Closure $visitor for each module's node to apply
      * @return array
      */
-    private function appendNestedPair(array $data, Closure $visitor)
+    private function createNestedPair(array $data, Closure $visitor)
     {
         $result = array();
 
@@ -210,7 +210,7 @@ final class LinkBuilder implements LinkBuilderInterface
         // This trick allows to use class's public methods inside a visitor at least
         $that = $this;
 
-        $data = $this->appendNestedPair($this->drop($raw), function($data) use ($that){
+        $data = $this->createNestedPair($this->drop($raw), function($data) use ($that){
             // Grab a service for current module
             $service = $that->getService($data['module']);
 
