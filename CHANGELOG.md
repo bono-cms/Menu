@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Made `active` class configurable. It defaults to `active`, but can be overridden in configuration array
  * Dropped reading rendering from configuration array. Since now an instance of renderer must be passed as a third argument explicitly.
  * Added support for table prefix
  * Updated module icon
