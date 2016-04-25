@@ -94,7 +94,8 @@ final class Dropdown extends AbstractSiteDropdown
             $ul->addAttribute('class', $this->options['class']['base']);
         }
 
-        return $ul->finalize()->render();
+        return $ul->finalize()
+                  ->render();
     }
 
     /**
@@ -103,6 +104,8 @@ final class Dropdown extends AbstractSiteDropdown
     protected function getNestedLevelParent()
     {
         $ul = new NodeElement();
-        return $ul->openTag('ul')->finalize()->render();
+        return $ul->openTag('ul')
+                  ->finalize()
+                  ->render();
     }
 }
