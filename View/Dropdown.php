@@ -28,7 +28,14 @@ final class Dropdown extends AbstractSiteDropdown
 
         // Is it active web page?
         if (isset($row['web_page_id']) && $row['web_page_id'] != 0 && $active != 0 && $row['web_page_id'] == $active) {
-            $li->addAttribute('class', 'active');
+            if (isset($this->options['class']['active'])) {
+                $activeClass = $this->options['class']['active'];
+            } else {
+                // By default "active" since this naming is kinda de-facto
+                $activeClass = 'active';
+            }
+
+            $li->addAttribute('class', $activeClass);
         }
 
         $a = new NodeElement();
