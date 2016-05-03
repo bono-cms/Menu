@@ -252,10 +252,9 @@ $(function(){
 		return false;
 	});
 	
-	// activate Nestable for list 2
-	$('#nestable2').nestable({
+	$('div.dd').nestable({
 		group: 1,
-		maxDepth: getDepthLevel()
+        maxDepth: getDepthLevel()
 	}).on('change', function(e){
 		var list = e.length ? e : $(e.target);
 		
