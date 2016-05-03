@@ -30,10 +30,10 @@ return array(
     ),
     
     '/admin/module/menu/item/view/(:var)' => array(
-        'controller'    => 'Admin:Item@viewAction'
+        'controller' => 'Admin:Item@viewAction'
     ),
     
-    '/admin/module/menu/item/delete' => array(
+    '/admin/module/menu/item/delete/(:var)' => array(
         'controller' => 'Admin:Item@deleteAction',
         'disallow' => array('guest')
     ),
@@ -55,7 +55,7 @@ return array(
         'controller' => 'Admin:Widget@loadWigdetAction',
     ),
 
-    '/admin/module/menu/category/delete' => array(
+    '/admin/module/menu/category/delete/(:var)' => array(
         'controller' => 'Admin:Category@deleteAction',
         'disallow' => array('guest')
     ),

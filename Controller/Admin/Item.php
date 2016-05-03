@@ -179,16 +179,13 @@ final class Item extends AbstractAdminController
     /**
      * Deletes an item by its associated id and its children if has
      * 
+     * @param string $id
      * @return string
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
-        if ($this->request->hasPost('id')) {
-            $id = $this->request->getPost('id');
-
-            $this->getItemManager()->deleteById($id);
-            $this->flashBag->set('success', 'The item has been removed successfully!');
-            return '1';
-        }
+        $this->getItemManager()->deleteById($id);
+        $this->flashBag->set('success', 'The item has been removed successfully!');
+        return '1';
     }
 }

@@ -1,18 +1,16 @@
-
 $(function(){
-	
-	$('.chosen-select').chosen();
-	
-	/**
+    
+    /**
 	 * Redirects to current menu category
 	 * 
 	 * @return void
 	 */
-	function toCurrentCategory(){
-		// We always have a category id
-		var categoryId = $("[name='category_id']").val();
-		// We must stay on the same category id
-		window.location = '/admin/module/menu/browse/category/' + categoryId;
+    function toCurrentCategory(){
+        // We always have a category id
+        var categoryId = $("[name='category_id']").val();
+
+        // We must stay on the same category id
+        window.location = $("form").data('category-url') + categoryId;
 	}
 
 	/**
@@ -22,7 +20,7 @@ $(function(){
 	 * @return void
 	 */
 	function toItem(id){
-		window.location = '/admin/module/menu/item/view/' + id;
+        window.location = $("form").data('item-url') + id;
 	}
 
 	/**
@@ -31,7 +29,7 @@ $(function(){
 	 * @return void
 	 */
 	function toExit(){
-		window.location = '/admin/logout';
+        $("[data-button='logout']").click();
 	}
 	
 	/**
@@ -40,12 +38,19 @@ $(function(){
 	 * @return void
 	 */
 	function toHome(){
-		window.location = '/admin/module/menu';
+		window.location = $("form").data('home-url');
 	}
 	
-	
-	function toAddingChild(categoryId, parentId){
-		window.location = '/admin/module/menu/item/add/category/' + categoryId + '/parent/' + parentId;
+    
+	function toAddingChild(category, parent){
+        // Create URL
+        var url = $("form").data('add-child-url');
+        
+        // Replace placeholders
+        url = url.replace('{category}', category);
+        url = url.replace('{parent}', parent);
+        
+        window.location = url;
 	}
 	
 	/**
@@ -64,34 +69,8 @@ $(function(){
 		}
 	}
 	
-	
-	// Handle delete buttons
-	$.delete({
-		categories : {
-			item : {
-				url : "/admin/module/menu/item/delete",
-				success : function(response){
-					if (response == "1"){
-						toCurrentCategory();
-					} else {
-						$.showErrors(response);
-					}
-				}
-			},
-			category : {
-				url : "/admin/module/menu/category/delete",
-				success : function(response){
-					if (response == "1") {
-						toHome();
-					} else {
-						$.showErrors(response);
-					}
-				}
-			}
-		}
-	});
-	
-	
+	$('.chosen-select').chosen();
+    
 	var $contextMenu = $("#contextMenu");
 	
 	$("body").on("contextmenu", "li.dd-item", function(e){
@@ -126,30 +105,25 @@ $(function(){
 		return false;
 	});
 	
-	
-	
 	$("body").click(function(){
 		$contextMenu.hide();
 	});
-	
 	
 	$("[data-button='expand-all']").click(function(event){
 		event.preventDefault();
 		$('.dd').nestable('expandAll');
 	});
 	
-	
 	$("[data-button='collapse-all']").click(function(event){
 		event.preventDefault();
 		$('.dd').nestable('collapseAll');
 	});
 	
-	
 	// Add & Create new event listener
 	$("[data-button='create-new']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url : "/admin/module/menu/item/add.ajax",
+			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
 				if ($.isNumeric(response)) {
@@ -161,12 +135,11 @@ $(function(){
 		});
 	});
 	
-	
 	// Add event listener
 	$("[data-button='add']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url : "/admin/module/menu/item/add.ajax",
+			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
 				if ($.isNumeric(response)) {
@@ -179,13 +152,11 @@ $(function(){
 		});
 	});
 	
-	
-	
 	// Add & Exit event listener
 	$("[data-button='create-exit']").click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url : "/admin/module/menu/item/add.ajax",
+			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
 				if ($.isNumeric(response)) {
@@ -197,20 +168,17 @@ $(function(){
 		});
 	});
 	
-	
-	
 	// Cancel event listener. That must always redirect to current category view
 	$("[data-button='cancel']").click(function(event){
 		event.preventDefault();
 		toCurrentCategory();
 	});
 	
-	
 	// Save event listener
 	$("[data-button='save']").click(function(event) {
 		event.preventDefault();
 		$.ajax({
-			url : "/admin/module/menu/item/edit.ajax",
+			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
 				if ($.isNumeric(response)) {
@@ -222,12 +190,11 @@ $(function(){
 		});
 	});
 	
-	
 	// Save and Create event listener
 	$("[data-button='save-create']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url : "/admin/module/menu/item/edit.ajax",
+			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
 				if (response == "1") {
@@ -239,12 +206,11 @@ $(function(){
 		});
 	});
 	
-	
 	// Save and exit event listener
 	$("[data-button='save-exit']").off('click').click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url : "/admin/module/menu/item/edit.ajax",
+			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
 				if (response == "1") {
@@ -256,13 +222,11 @@ $(function(){
 		});
 	});
 
-	
 	if ($("[name='has_link']").val() == ""){
 		$("#custom-link-row").addClass('hidden');
 	} else {
 		$("#custom-link-row").removeClass('hidden');
 	}
-	
 	
 	$("[name='web_page_id']").change(function(event) {
 		var val = $(this).val();
@@ -288,20 +252,18 @@ $(function(){
 		return false;
 	});
 	
-	
 	// activate Nestable for list 2
 	$('#nestable2').nestable({
 		group: 1,
 		maxDepth: getDepthLevel()
 	}).on('change', function(e){
-		
 		var list = e.length ? e : $(e.target);
 		
 		if (window.JSON) {
 			var value = window.JSON.stringify(list.nestable('serialize'));
 			
 			$.ajax({
-				url : "/admin/module/menu/save.ajax",
+				url : $(this).data('url'),
 				data : {
 					"json_data" : value,
 				},
@@ -315,6 +277,4 @@ $(function(){
 			});
 		}
 	});
-	
 });
-
