@@ -13,7 +13,7 @@ $(function(){
 		}
 		
 		$.ajax({
-			url : "/admin/module/menu/widget/load/" + webPageId,
+			url : $("input[name='widget-load-url']").val() + webPageId,
 			beforeSend : function(){
 				// Override with empty
 			},
@@ -28,7 +28,7 @@ $(function(){
 	$("[data-button='add-item']").click(function(event){
 		event.preventDefault();
 		$.ajax({
-			url : "/admin/module/menu/widget/load-empty.ajax",
+			url : $(this).data('url'),
 			beforeSend : function(){
 				// Override with empty
 			},
@@ -52,7 +52,7 @@ $(function(){
 							.find("[data-widget='menu-parent-item']");
 		
 		$.ajax({
-			url : "/admin/module/menu/category/load-items.ajax",
+			url : $(this).data('url'),
 			data : {
 				category_id : categoryId
 			},

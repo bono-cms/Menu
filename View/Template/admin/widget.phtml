@@ -27,7 +27,7 @@ use Krystal\Form\HtmlHelper;
 		<label class="col-lg-2 control-label"><?php $this->show('In menu'); ?></label>
 		<div class="col-lg-10">
 			
-			<select name="menu[widget][category_id][]" class="form-control" data-widget="menu-category">
+			<select name="menu[widget][category_id][]" class="form-control" data-widget="menu-category" data-url="<?php echo $this->url('Menu:Admin:Widget@loadCategoryItemsAction'); ?>">
 				
 				<?php foreach ($categories as $categoryBag): ?>
 				<option value="<?php echo $categoryBag->getId(); ?>" <?php HtmlHelper::selectOnDemand($categoryBag->getId() == $item->getCategoryId()); ?>><?php echo $categoryBag->getName(); ?></option>
