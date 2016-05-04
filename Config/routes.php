@@ -48,7 +48,7 @@ return array(
     ),
     
     '/admin/module/menu/widget/load-empty.ajax' => array(
-        'controller' => 'Admin:Widget@loadWigdetAction',
+        'controller' => 'Admin:Widget@loadEmptyAction',
     ),
     
     '/admin/module/menu/widget/load/(:var)' => array(

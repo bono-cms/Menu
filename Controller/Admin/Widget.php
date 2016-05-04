@@ -41,6 +41,16 @@ final class Widget extends AbstractAdminController
     }
 
     /**
+     * Loads empty widget
+     * 
+     * @return string
+     */
+    public function loadEmptyAction()
+    {
+        return $this->loadWigdetAction(null);
+    }
+
+    /**
      * Loads menu widget
      * 
      * @param string $webPageId
