@@ -10,69 +10,68 @@
  */
 
 return array(
-    
-    '/admin/module/menu' => array(
+    '/%s/module/menu' => array(
         'controller' => 'Admin:Item@indexAction'
     ),
     
-    '/admin/module/menu/save.ajax' => array(
+    '/%s/module/menu/save.ajax' => array(
         'controller' => 'Admin:Item@saveAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/menu/item/add/category/(:var)/parent/(:var)' => array(
+    '/%s/module/menu/item/add/category/(:var)/parent/(:var)' => array(
         'controller' => 'Admin:Item@addChildAction'
     ),
     
-    '/admin/module/menu/item/add.ajax' => array(
+    '/%s/module/menu/item/add.ajax' => array(
         'controller' => 'Admin:Item@addAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/menu/item/view/(:var)' => array(
+    '/%s/module/menu/item/view/(:var)' => array(
         'controller' => 'Admin:Item@viewAction'
     ),
     
-    '/admin/module/menu/item/delete/(:var)' => array(
+    '/%s/module/menu/item/delete/(:var)' => array(
         'controller' => 'Admin:Item@deleteAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/menu/item/edit.ajax' => array(
+    '/%s/module/menu/item/edit.ajax' => array(
         'controller' => 'Admin:Item@updateAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/menu/category/load-items.ajax' => array(
+    '/%s/module/menu/category/load-items.ajax' => array(
         'controller' => 'Admin:Widget@loadCategoryItemsAction',
     ),
     
-    '/admin/module/menu/widget/load-empty.ajax' => array(
+    '/%s/module/menu/widget/load-empty.ajax' => array(
         'controller' => 'Admin:Widget@loadEmptyAction',
     ),
     
-    '/admin/module/menu/widget/load/(:var)' => array(
+    '/%s/module/menu/widget/load/(:var)' => array(
         'controller' => 'Admin:Widget@loadWigdetAction',
     ),
 
-    '/admin/module/menu/category/delete/(:var)' => array(
+    '/%s/module/menu/category/delete/(:var)' => array(
         'controller' => 'Admin:Category@deleteAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/menu/browse/category/(:var)' => array(
+    '/%s/module/menu/browse/category/(:var)' => array(
         'controller' => 'Admin:Item@categoryAction'
     ),
     
-    '/admin/module/menu/category/add' => array(
+    '/%s/module/menu/category/add' => array(
         'controller' => 'Admin:Category@addAction'
     ),
     
-    '/admin/module/menu/category/edit/(:var)' => array(
+    '/%s/module/menu/category/edit/(:var)' => array(
         'controller' => 'Admin:Category@editAction'
     ),
     
-    '/admin/module/menu/category/save' => array(
+    '/%s/module/menu/category/save' => array(
         'controller' => 'Admin:Category@saveAction',
         'disallow' => array('guest')
     )
