@@ -218,7 +218,7 @@ final class LinkBuilder implements LinkBuilderInterface
             if ($service !== false) {
 
                 // Append a new key, called title
-                $data['title'] = $service->fetchTitleByWebPageId($data['id']);
+                $data['title'] = $service->fetchNameByWebPageId($data['id']);
                 return $data;
             }
         });
