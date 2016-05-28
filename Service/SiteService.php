@@ -81,7 +81,7 @@ final class SiteService implements SiteServiceInterface
      * @param string $class Menu category's class
      * @return \Krystal\Tree\AdjacencyList\TreeBuilder
      */
-    private function getTreeBuilder($class)
+    private function createTreeBuilder($class)
     {
         $id = $this->categoryMapper->fetchIdByClass($class);
         $data = $this->itemMapper->fetchAllByCategoryId($id, true);
@@ -124,7 +124,7 @@ final class SiteService implements SiteServiceInterface
      */
     public function renderByClass($class, $webPageId, $renderer)
     {
-        $tree = $this->getTreeBuilder($class);
+        $tree = $this->createTreeBuilder($class);
 
         if ($renderer instanceof WebPageAwareRendererInterface) {
             $renderer->setWebPageManager($this->webPageManager);
