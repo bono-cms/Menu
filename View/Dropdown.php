@@ -44,7 +44,10 @@ final class Dropdown extends AbstractSiteDropdown
 
         // Whether to open in new window?
         if ((bool) $row['open_in_new_window']) {
-            $a->addAttribute('target', '_blank');
+            $a->addAttributes(array(
+                'target' => '_blank',
+                'rel' => 'noopener noreferrer'
+            ));
         }
 
         if (!empty($row['hint'])) {
