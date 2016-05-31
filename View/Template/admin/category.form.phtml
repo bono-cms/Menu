@@ -1,11 +1,11 @@
 <?php defined('KRYSTAL') or die; ?>
 
 <form data-group="category">
-	<div class="well clearfix">
+	<div class="well">
 		
 		<input type="hidden" name="category[id]" value="<?php echo $category->getId(); ?>" />
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -17,7 +17,7 @@
 		
 		<?php if ($extendedMode): ?>
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Class'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -33,7 +33,7 @@
 		
 		<?php endif; ?>
 		
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Maximal depth'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
