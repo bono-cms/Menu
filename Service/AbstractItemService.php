@@ -23,16 +23,16 @@ abstract class AbstractItemService extends AbstractManager
     protected function toEntity(array $item)
     {
         $entity = new VirtualEntity();
-        $entity->setId((int) $item['id'])
-            ->setParentId((int) $item['parent_id'])
-            ->setCategoryId((int) $item['category_id'])
-            ->setWebPageId($item['web_page_id'])
-            ->setName(Filter::escape($item['name']))
-            ->setLink(Filter::escape($item['link']))
-            ->setHasLink((bool) $item['has_link'])
-            ->setHint(Filter::escape($item['hint']))
-            ->setOpenInNewWindow((bool) $item['open_in_new_window'])
-            ->setPublished((bool) $item['published']);
+        $entity->setId($item['id'], VirtualEntity::FILTER_INT)
+            ->setParentId($item['parent_id'], VirtualEntity::FILTER_INT)
+            ->setCategoryId($item['category_id'], VirtualEntity::FILTER_INT)
+            ->setWebPageId($item['web_page_id'], VirtualEntity::FILTER_INT)
+            ->setName($item['name'], VirtualEntity::FILTER_TAGS)
+            ->setLink($item['link'], VirtualEntity::FILTER_TAGS)
+            ->setHasLink($item['has_link'], VirtualEntity::FILTER_BOOL)
+            ->setHint($item['hint'], VirtualEntity::FILTER_TAGS)
+            ->setOpenInNewWindow($item['open_in_new_window'], VirtualEntity::FILTER_BOOL)
+            ->setPublished($item['published'], VirtualEntity::FILTER_BOOL);
 
         return $entity;
     }
