@@ -72,7 +72,9 @@ $(function(){
 	$('.chosen-select').chosen();
     
 	var $contextMenu = $("#contextMenu");
-	
+    var $removeBtn = $("[data-button='remove']");
+	var removalUrl = $removeBtn.data('url');
+
 	$("body").on("contextmenu", "li.dd-item", function(e){
 		e.preventDefault();
 
@@ -95,13 +97,22 @@ $(function(){
 			event.preventDefault();
 			// Grab a category id
 			var categoryId = $("[name='category_id']").val();
-			
+
 			toAddingChild(categoryId, id);
 		});
-		
-		// Update an id to make it aware of last called item
-		$("[data-button='remove']").data('id', id);
-		
+
+        // Handle removal
+        $removeBtn.data('id', id);
+
+        if ($("[name='id']").val()) {
+            var url = $removeBtn.data('base-removal-url') + id;
+        } else {
+            var url = removalUrl + id;
+        }
+
+        // Alter removal URL
+        $removeBtn.data('url', url);
+
 		return false;
 	});
 	
