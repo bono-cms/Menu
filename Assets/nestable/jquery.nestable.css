@@ -12,7 +12,7 @@ fieldset {
 }
 
 #nestedactive {
- background : #7E7E7E !important;
+ background : black !important;
  text-decoration: underline;
 }
 
@@ -191,14 +191,13 @@ fieldset {
 
 div.dd .dd-handle {
     color: #fff;
-    border: 1px solid #999;
-    background: #bbb;
-    background: -webkit-linear-gradient(top, #bbb 0%, #999 100%);
-    background:    -moz-linear-gradient(top, #bbb 0%, #999 100%);
-    background:         linear-gradient(top, #bbb 0%, #999 100%);
+    background: #222;
+    background: -webkit-linear-gradient(top, #222 0%, #999 100%);
+    background:    -moz-linear-gradient(top, #222 0%, #999 100%);
+    background:         linear-gradient(top, #222 0%, #999 100%);
 }
 
-div.dd .dd-handle:hover { background: #bbb; }
+div.dd .dd-handle:hover { background: black; }
 div.dd .dd-item > button:before { color: #fff; }
 
 /*
