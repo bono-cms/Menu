@@ -104,15 +104,18 @@ final class BootstrapDropdown extends AbstractSiteDropdown
     protected function getFirstLevelParent()
     {
         $ul = new NodeElement();
-        $ul->openTag('ul')
-           ->addAttribute('class', 'nav navbar-nav');
+        $ul->openTag('ul');
 
         // Check whether we have a class name
         if (isset($this->options['class']['base'])) {
-            $ul->addAttribute('class', $this->options['class']['base']);
+            $class = $this->options['class']['base'];
+        } else {
+            // Use default if not provided
+            $class = 'nav navbar-nav';
         }
 
-        return $ul->finalize()
+        return $ul->addAttribute('class', $class)
+                  ->finalize()
                   ->render();
     }
 
