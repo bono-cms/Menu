@@ -27,10 +27,10 @@ abstract class AbstractItemService extends AbstractManager
             ->setParentId($item['parent_id'], VirtualEntity::FILTER_INT)
             ->setCategoryId($item['category_id'], VirtualEntity::FILTER_INT)
             ->setWebPageId($item['web_page_id'], VirtualEntity::FILTER_INT)
-            ->setName($item['name'], VirtualEntity::FILTER_TAGS)
-            ->setLink($item['link'], VirtualEntity::FILTER_TAGS)
+            ->setName($item['name'], VirtualEntity::FILTER_HTML)
+            ->setLink($item['link'], VirtualEntity::FILTER_HTML)
             ->setHasLink($item['has_link'], VirtualEntity::FILTER_BOOL)
-            ->setHint($item['hint'], VirtualEntity::FILTER_TAGS)
+            ->setHint($item['hint'], VirtualEntity::FILTER_HTML)
             ->setOpenInNewWindow($item['open_in_new_window'], VirtualEntity::FILTER_BOOL)
             ->setPublished($item['published'], VirtualEntity::FILTER_BOOL);
 

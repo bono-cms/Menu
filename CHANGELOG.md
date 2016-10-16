@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with quote escaping
  * Fixed issue with ability to edit main UL class in `\Menu\View\BootstrapDropdown`
  * Changed color of items. They are now black
  * Fixed binding issue with item removals
