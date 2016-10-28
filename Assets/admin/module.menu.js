@@ -233,7 +233,7 @@ $(function(){
 		});
 	});
 
-	if ($("[name='has_link']").val() == ""){
+	if ($("[name='has_link']").val() == "0"){
 		$("#custom-link-row").addClass('hidden');
 	} else {
 		$("#custom-link-row").removeClass('hidden');
