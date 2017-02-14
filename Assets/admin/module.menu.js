@@ -233,7 +233,9 @@ $(function(){
 		});
 	});
 
-	if ($("[name='has_link']").val() == "0"){
+    var hasLink = Boolean($("[name='has_link']").val());
+    
+	if (!hasLink){
 		$("#custom-link-row").addClass('hidden');
 	} else {
 		$("#custom-link-row").removeClass('hidden');
