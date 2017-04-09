@@ -30,14 +30,12 @@ final class Item extends AbstractAdminController
     {
         // Load view plugins
         $this->view->getPluginBag()
+                    ->load('chosen')
                     ->appendScripts(array(
                         '@Menu/nestable/jquery.nestable.js',
-                        '@Cms/plugins/chosen/chosen.jquery.min.js',
                         '@Menu/admin/module.menu.js'
                     ))->appendStylesheets(array(
                         '@Menu/nestable/jquery.nestable.css',
-                        '@Cms/plugins/chosen/chosen.css',
-                        '@Cms/plugins/chosen/chosen-bootstrap.css'
                     ));
 
         // Append a breadcrumb
