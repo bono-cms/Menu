@@ -33,14 +33,23 @@ final class LinkBuilder implements LinkBuilderInterface
     private $services = array();
 
     /**
+     * A collection of modules to be excluded
+     * 
+     * @var array
+     */
+    private $excludedModules = array();
+
+    /**
      * State initialization
      * 
      * @param \Cms\Service\WebPageManagerInterface $webPageManager
+     * @param array $excludedModules
      * @return void
      */
-    public function __construct(WebPageManagerInterface $webPageManager)
+    public function __construct(WebPageManagerInterface $webPageManager, array $excludedModules = array())
     {
         $this->webPageManager = $webPageManager;
+        $this->excludedModules = $excludedModules;
     }
 
     /**
@@ -71,7 +80,7 @@ final class LinkBuilder implements LinkBuilderInterface
      */
     public function collect()
     {
-        $raw = $this->webPageManager->fetchAll();
+        $raw = $this->webPageManager->fetchAll($this->excludedModules);
         $data = $this->process($raw);
 
         return $this->createResult($data);

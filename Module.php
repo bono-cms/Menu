@@ -42,11 +42,14 @@ final class Module extends AbstractCmsModule
         $historyManager = $this->getHistoryManager();
         $webPageManager = $this->getWebPageManager();
 
-        return array(
+        // Get excluded modules
+        $config = $this->getConfig();
+        $excludedModules = isset($config['exclude']) && is_array($config['exclude']) ? $config['exclude'] : array();
 
+        return array(
             'menuWidget' => new MenuWidget($itemMapper),
             'siteService' => new SiteService($itemMapper, $categoryMapper, $webPageManager),
-            'linkBuilder' => new LinkBuilder($webPageManager),
+            'linkBuilder' => new LinkBuilder($webPageManager, $excludedModules),
             'itemManager' => new ItemManager($itemMapper, $categoryMapper, $historyManager),
             'categoryManager' => new CategoryManager($categoryMapper, $itemMapper, $historyManager)
         );
