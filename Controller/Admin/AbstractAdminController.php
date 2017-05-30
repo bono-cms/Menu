@@ -69,7 +69,7 @@ abstract class AbstractAdminController extends AbstractController
         // Menu link builder is just prepared, but now configured yet. I.e it has no data yet
         // So we'll be adding it here. If adding it in Module definition, then that would be extra overhead
         $linkBuilder = $menu->getService('linkBuilder');
-        $linkBuilder->loadFromDefiniton($menu->getLinkDefinitions(), $this->moduleManager);
+        $linkBuilder->loadFromDefiniton($menu->getLinkDefinitions());
 
         return $linkBuilder;
     }

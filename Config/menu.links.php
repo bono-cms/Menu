@@ -10,55 +10,14 @@
  */
 
 return array(
-    array(
-        'module' => 'Pages',
-        'services' => array(
-            'Pages' => 'pageManager'
-        )
-    ),
-
-    array(
-        'module' => 'Photogallery',
-        'services' => array(
-            'Photogallery' => 'albumManager'
-        )
-    ),
-
-    array(
-        'module' => 'News',
-        'services' => array(
-            'News (Categories)' => 'categoryManager',
-            'News (Posts)' => 'postManager'
-        )
-    ),
-
-    array(
-        'module' => 'Shop',
-        'services' => array(
-            'Shop (Categories)' => 'categoryManager',
-            'Shop (Products)' => 'productManager'
-        )
-    ),
-
-    array(
-        'module' => 'Blog',
-        'services' => array(
-            'Blog (Categories)' => 'categoryManager',
-            'Blog (Posts)' => 'postManager'
-        )
-    ),
-
-    array(
-        'module' => 'Announcement',
-        'services' => array(
-            'Announcements' => 'announceManager'
-        )
-    ),
-
-    array(
-        'module' => 'MailForm',
-        'services' => array(
-            'Mail forms' => 'formManager'
-        )
-    )
+    '\Shop\Storage\MySQL\ProductMapper' => 'Shop (Products)',
+    '\Shop\Storage\MySQL\CategoryMapper' => 'Shop (Categories)',
+    '\Pages\Storage\MySQL\PageMapper' => 'Pages',
+    '\Photogallery\Storage\MySQL\AlbumMapper' => 'Photogallery',
+    '\News\Storage\MySQL\PostMapper' => 'News (Posts)',
+    '\News\Storage\MySQL\CategoryMapper' => 'News (Categories)',
+    '\Blog\Storage\MySQL\PostMapper' => 'Blog (Posts)',
+    '\Blog\Storage\MySQL\CategoryMapper' => 'Blog (Categories)',
+    '\Announcement\Storage\MySQL\AnnounceMapper' => 'Announcement',
+    '\MailForm\Storage\MySQL\FormMapper' => 'MailForm'
 );

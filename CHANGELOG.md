@@ -4,7 +4,7 @@ CHANGELOG
 1.3
 ---
 
- * Ability to exclude modules when building link tree
+ * Improved the way of fetching records. Since now additional database queries won't be executed in iteration
  * Fixed issue with quote escaping
  * Fixed issue with ability to edit main UL class in `\Menu\View\BootstrapDropdown`
  * Changed color of items. They are now black

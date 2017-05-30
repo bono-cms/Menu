@@ -20,10 +20,9 @@ interface LinkBuilderInterface
      * Loads data from array of link definitions
      * 
      * @param array $definitions
-     * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManager
      * @return void
      */
-    public function loadFromDefiniton(array $definitions, ModuleManagerInterface $moduleManager);
+    public function loadFromDefiniton(array $definitions);
 
     /**
      * Extract links from registered services
@@ -31,20 +30,4 @@ interface LinkBuilderInterface
      * @return array
      */
     public function collect();
-
-    /**
-     * Adds a service
-     * 
-     * @param MenuAwareManager $service Any manager that implements this interface
-     * @return \Menu\Service\LinkBuilder
-     */
-    public function addService($module, MenuAwareManager $service);
-
-    /**
-     * Adds service collection
-     * 
-     * @param array $services
-     * @return \Menu\Service\LinkBuilder
-     */
-    public function addServices(array $services);
 }
