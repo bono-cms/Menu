@@ -11,6 +11,7 @@
 
 namespace Menu\Service;
 
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Application\Module\ModuleManagerInterface;
 use Menu\Contract\MenuAwareManager;
 use Cms\Service\WebPageManagerInterface;
@@ -67,8 +68,7 @@ final class LinkBuilder implements LinkBuilderInterface
     public function collect()
     {
         $raw = $this->webPageManager->findAllLinks($this->collection);
-
-        $collection = $this->compactModules($raw);
+        $collection = ArrayUtils::arrayPartition($raw, 'module');
         $collection = $this->createNestedPair($collection);
 
         return $this->createResult($collection);
@@ -91,33 +91,6 @@ final class LinkBuilder implements LinkBuilderInterface
             }
 
             $result[$module] = $collection;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Compacts a raw result-set into sub-modules
-     * 
-     * @param array $raw Raw data that directly comes from a mapper
-     * @return array Dropped array
-     */
-    private function compactModules(array $raw)
-    {
-        $result = array();
-
-        foreach ($raw as $index => $collection) {
-            // Extract module' name as a key and put the rest into its values
-            $target = array($collection['module'] => $collection);
-
-            foreach ($target as $module => $array) {
-                // When doesn't exist, then need to create a one
-                if (!isset($result[$module])) {
-                    $result[$module] = array();
-                }
-
-                $result[$module][] = $array;
-            }
         }
 
         return $result;
