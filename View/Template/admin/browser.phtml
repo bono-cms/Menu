@@ -1,12 +1,12 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
 use Krystal\Form\HtmlHelper;
+use Krystal\Form\Element;
+defined('KRYSTAL') or die;
 
 ?>
 
 <div class="row">
-	
 	<!-- Context menu for items -->
 	<ul id="contextMenu" class="dropdown-menu" role="menu">
 		<li><a href="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Return to beginning'); ?></a></li>
@@ -19,126 +19,82 @@ use Krystal\Form\HtmlHelper;
 		<li><a href="#" data-button="collapse-all"><i class="glyphicon glyphicon-resize-small"></i> <?php $this->show('Collapse all'); ?></a></li>
 	</ul>
 	<!-- /Context menu for items -->
-	
-	
+
 	<div class="col-lg-5">
 		<?php if (!empty($itemsBlock)): ?>
 		<div class="dd" data-url="<?php echo $this->url('Menu:Admin:Item@saveAction'); ?>"><?php echo $itemsBlock; ?></div>	
-		
 		<?php else: ?>
-		
+
 		<div class="center-block">
 			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No items'); ?></h2>
 		</div>
-		
 		<?php endif; ?>
 	</div>
 	
-	
 	<div class="col-lg-7">
-		
 		<?php if (!empty($categories)): ?>
-		
 		<form data-add-child-url="<?php echo $this->url('Menu:Admin:Item@addChildAction', '{category}', '{parent}'); ?>" data-home-url="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>" data-category-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', null); ?>" data-item-url="<?php echo $this->url('Menu:Admin:Item@viewAction', null); ?>">
-			
-			<input type="hidden" name="category_id" value="<?php echo $item->getCategoryId(); ?>" />
-			<input type="hidden" name="id" value="<?php echo $item->getId(); ?>" />
-			<input type="hidden" name="has_link" value="<?php echo $item->getHasLink(); ?>"/>
-			<input type="hidden" name="max_depth" value="<?php echo $maxDepth; ?>" />
-			
+            <?php echo Element::hidden('category_id', $item->getCategoryId()); ?>
+            <?php echo Element::hidden('id', $item->getId()); ?>
+            <?php echo Element::hidden('has_link', $item->getHasLink()); ?>
+            <?php echo Element::hidden('max_depth', $maxDepth); ?>
+
 			<div class="table-responsive">
 				<form class="form-horizontal">
 				  <fieldset>
 					<legend class="text-muted"><i class="glyphicon glyphicon-list"></i> <?php $this->show($helper_title); ?></legend>
-					
+
 					<div class="form-group">
 					  <label for="inputName" class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 					  <div class="col-lg-10">
-						<input type="text" id="inputName" class="form-control" name="name" placeholder="<?php echo $this->show('Item name'); ?>" value="<?php echo $item->getName(); ?>" />
+                        <?php echo Element::text('name', $item->getName(), array('id' => 'inputName', 'class' => 'form-control', 'placeholder' => $this->translate('Item name'))); ?>
 					  </div>
 					</div>
-					
+
 					<div class="form-group">
 					  <label for="chosenSelect" class="col-lg-2 control-label"><?php $this->show('Link'); ?></label>
 					  <div class="col-lg-10">
-						<select name="web_page_id" class="chosen-select form-control" id="chosenSelect">
-							<option value="#"><?php $this->show('None'); ?></option>
-							<option value="0" <?php HtmlHelper::selectOnDemand($item->getWebPageId() == '0'); ?>><?php $this->show('Custom link'); ?></option>
-							
-							<?php foreach ($links as $module => $collection): ?>
-							
-							<optgroup label="<?php $this->show($module); ?>">
-								<?php foreach ($collection as $container): ?>
-								<option value="<?php echo $container['id']; ?>" <?php HtmlHelper::selectOnDemand($container['id'] == $item->getWebPageId()); ?>><?php echo $container['title']; ?></option>
-								<?php endforeach; ?>
-							</optgroup>
-							
-							<?php endforeach; ?>
-						</select>
-
+                        <?php echo Element::select('web_page_id', $links, $item->getWebPageId(), array('class' => 'chosen-select form-control', 'id' => 'chosenSelect')); ?>
 					  </div>
 					</div>
-					
-					
+
 					<div class="form-group" id="custom-link-row">
 					  <label for="inputLink" class="col-lg-2 control-label"><?php $this->show('Type a link'); ?></label>
 					  <div class="col-lg-10">
-						<input type="text" class="form-control" id="inputLink" name="link" value="<?php echo $item->getLink(); ?>" placeholder="<?php $this->show('http://'); ?>" />
+                        <?php echo Element::text('link', $item->getLink(), array('class' => 'form-control', 'id' => 'inputLink', 'placeholder' => $this->translate('http://'))); ?>
 					  </div>
 					</div>
 
 					<?php if (!$item->getId()): ?>
-
 					<div class="form-group">
 					  <label for="select" class="col-lg-2 control-label"><?php $this->show('Parent item'); ?></label>
 					  <div class="col-lg-10">
-						<select name="parent_id" class="form-control" id="select">
-							<option value="0">— <?php $this->show('None'); ?> —</option>
-							
-							<?php if (!empty($items)): ?>
-							
-							<?php foreach ($items as $target => $title): ?>
-							<option value="<?php echo $target; ?>" <?php HtmlHelper::selectOnDemand($item->getParentId() == $target); ?>><?php echo $title; ?></option>
-							<?php endforeach; ?>
-							
-							<?php endif; ?>
-						</select>
-
+                        <?php echo Element::select('parent_id', $items, $item->getParentId(), array('class' => 'form-control', 'id' => 'select'), '— ' . $this->translate('None') . ' —'); ?>
 					  </div>
 					</div>
 					<?php endif; ?>
-					
-					
-					
+
 					<div class="form-group">
 					  <label for="textArea" class="col-lg-2 control-label"><?php $this->show('Hint'); ?></label>
 					  <div class="col-lg-10">
-						<textarea class="form-control" rows="3" id="textArea" name="hint" placeholder="<?php $this->show('Hint to be displayed when mouse overs'); ?>"><?php echo $item->getHint(); ?></textarea>
+                        <?php echo Element::textarea('hint', $item->getHint(), array('rows' => 3, 'class' => 'form-control', 'id' => 'textArea', 'placeholder' => $this->translate('Hint to be displayed when mouse overs'))); ?>
 					  </div>
 					</div>
-					
 
 					<div class="form-group">
 					  <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 					  <div class="col-lg-10">
 						<div class="checkbox">
-						  <label>
-							<input type="hidden" name="published" value="0" />
-							<input type="checkbox" name="published" value="1" <?php HtmlHelper::checkOnDemand($item->getPublished()); ?>/>
-						  </label>
+						  <label><?php echo Element::checkbox('published', $item->getPublished()); ?></label>
 						</div>
 					  </div>
 					</div>
-					
-					
+
 					<div class="form-group">
 					  <label class="col-lg-2 control-label"><?php $this->show('Open in new window'); ?></label>
 					  <div class="col-lg-10">
 						<div class="checkbox">
-						  <label>
-							<input type="hidden" name="open_in_new_window" value="0" />
-							<input type="checkbox" name="open_in_new_window" value="1" <?php HtmlHelper::checkOnDemand($item->getOpenInNewWindow()); ?>/>
-						  </label>
+						  <label><?php echo Element::checkbox('open_in_new_window', $item->getOpenInNewWindow()); ?></label>
 						</div>
 					  </div>
 					</div>
@@ -150,9 +106,7 @@ use Krystal\Form\HtmlHelper;
 		<br />
 		
 		<div class="pull-right">
-			
 			<?php if ($item->getId()): ?>
-			
 			<div class="btn-group">
 			  <a class="btn btn-primary" data-button="save" data-url="<?php echo $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></a>
 			  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
@@ -164,9 +118,8 @@ use Krystal\Form\HtmlHelper;
 			
 			<button class="btn btn-primary" data-button="remove" data-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Remove'); ?></button>
 			<button class="btn btn-default" data-button="cancel"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Cancel'); ?></button>
-			
 			<?php else: ?>
-			
+
 			<div class="btn-group pull-right">
 			  <button type="submit" class="btn btn-primary" data-button="add" data-url="<?php echo $this->url('Menu:Admin:Item@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 			  <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
@@ -176,27 +129,22 @@ use Krystal\Form\HtmlHelper;
 				<li><a href="#" data-button="create-exit" data-url="<?php echo $this->url('Menu:Admin:Item@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Exit'); ?></a></li>
 			  </ul>
 			</div>
-			
 			<?php endif; ?>
 		</div>
-		
-		<?php else: ?>
 
+		<?php else: ?>
 		<div class="center-block">
 			<h2 class="text-center text-muted"><small><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('To start using menu module, you need to create at least one category'); ?></small></h2>
 		</div>
-		
 		<?php endif; ?>
-		
 	</div>
-	
 </div>
 
 <div class="clearfix"></div>
 
 <div class="table-responsive">
 	<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
-	
+
 	<table class="table table-hover table-bordered table-striped table-condensed">
 		<thead>
 			<tr>
@@ -212,7 +160,6 @@ use Krystal\Form\HtmlHelper;
 		
 		<?php if (!empty($categories)): ?>
 		<tbody>
-			
 			<?php foreach ($categories as $category): ?>
 			<tr>
 				<td class="text-center text-muted"><?php echo $category->getId(); ?></td>
@@ -234,26 +181,21 @@ use Krystal\Form\HtmlHelper;
 					<a data-button="delete" href="#" data-success-url="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>" data-url="<?php echo $this->url('Menu:Admin:Category@deleteAction', $category->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove the category with all its items'); ?>" ><i class="glyphicon glyphicon-remove"></i></a>
 				</td>
 				<?php endif; ?>
-				
 			</tr>
 			<?php endforeach; ?>
-			
 		</tbody>
 		<?php endif; ?>
 	</table>
-	
+
 	<?php if (empty($categories)): ?>
 	<div class="center-block">
 		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
 	</div>
 	<?php endif; ?>
-	
+
 	<?php if ($extendedMode): ?>
-	
 	<div class="pull-left">
 		<a href="<?php echo $this->url('Menu:Admin:Category@addAction'); ?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> <?php $this->show('Add category'); ?></a>
 	</div>
-	
 	<?php endif; ?>
-	
 </div>
