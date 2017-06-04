@@ -45,7 +45,6 @@ final class Module extends AbstractCmsModule
         return array(
             'menuWidget' => new MenuWidget($itemMapper),
             'siteService' => new SiteService($itemMapper, $categoryMapper, $webPageManager),
-            'linkBuilder' => new LinkBuilder($webPageManager),
             'itemManager' => new ItemManager($itemMapper, $categoryMapper, $historyManager),
             'categoryManager' => new CategoryManager($categoryMapper, $itemMapper, $historyManager)
         );

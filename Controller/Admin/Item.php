@@ -25,10 +25,7 @@ final class Item extends AbstractAdminController
     private function createLinks()
     {
         $menu = $this->moduleManager->getModule('Menu');
-
-        // Menu link builder is just prepared, but now configured yet. I.e it has no data yet
-        // So we'll be adding it here. If adding it in Module definition, then that would be extra overhead
-        $linkBuilder = $menu->getService('linkBuilder');
+        $service = $this->getService('Cms', 'webPageManager');
 
         // Default links to be prepended
         $defaults = array(
@@ -39,7 +36,7 @@ final class Item extends AbstractAdminController
         $output = array();
 
         // Translate module names
-        foreach ($linkBuilder->collect($menu->getLinkDefinitions()) as $module => $data) {
+        foreach ($service->createPrettyLinks($menu->getLinkDefinitions()) as $module => $data) {
             $output[$this->translator->translate($module)] = $data;
         }
 

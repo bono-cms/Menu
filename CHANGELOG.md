@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Removed internal `LinkBuilder` service
  * Improved the way of fetching records. Since now additional database queries won't be executed in iteration
  * Fixed issue with quote escaping
  * Fixed issue with ability to edit main UL class in `\Menu\View\BootstrapDropdown`
