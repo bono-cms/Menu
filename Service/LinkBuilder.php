@@ -27,13 +27,6 @@ final class LinkBuilder implements LinkBuilderInterface
     private $webPageManager;
 
     /**
-     * A collection to be rendered
-     * 
-     * @var array
-     */
-    private $collection = array();
-
-    /**
      * State initialization
      * 
      * @param \Cms\Service\WebPageManagerInterface $webPageManager
@@ -45,81 +38,23 @@ final class LinkBuilder implements LinkBuilderInterface
     }
 
     /**
-     * Loads data from array of link definitions
+     * Extract links from registered services
      * 
      * @param array $definitions
-     * @return void
+     * @return array
      */
-    public function loadFromDefiniton(array $definitions)
+    public function collect(array $definitions)
     {
+        $collection = array();
+
         foreach ($definitions as $namespace => $caption) {
             // Add only loaded mappers
             if (class_exists($namespace)) {
-                $this->collection[$namespace::getTableName()] = $caption;
-            }
-        }
-    }
-
-    /**
-     * Extract links from registered services
-     * 
-     * @return array
-     */
-    public function collect()
-    {
-        $raw = $this->webPageManager->findAllLinks($this->collection);
-        $collection = ArrayUtils::arrayPartition($raw, 'module');
-        $collection = $this->createNestedPair($collection);
-
-        return $this->createResult($collection);
-    }
-
-    /**
-     * Prepares processed result-set
-     * 
-     * @param array $data
-     * @return array
-     */
-    private function createResult(array $data)
-    {
-        $result = array();
-
-        foreach ($data as $module => $collection) {
-            // Make sure a module label exists, if it doesn't, then create a new one
-            if (!isset($result[$module])) {
-                $result[$module] = array();
-            }
-
-            $result[$module] = $collection;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Appends data into nested dropped array using a visitor
-     * 
-     * @param array $data
-     * @return array
-     */
-    private function createNestedPair(array $data)
-    {
-        $result = array();
-
-        foreach ($data as $module => $options) {
-            foreach ($options as $index => $collection) {
-                // If $data has something, then we'd start processing its block
-                if (!empty($collection)) {
-                    if (!isset($result[$module])) {
-                        $result[$module] = array();
-                    }
-
-                    // Assign visitor's returned value
-                    $result[$module][] = $collection;
-                }
+                $collection[$namespace::getTableName()] = $caption;
             }
         }
 
-        return $result;
+        $raw = $this->webPageManager->findAllLinks($collection);
+        return ArrayUtils::arrayDropdown($raw, 'module', 'id', 'title');
     }
 }

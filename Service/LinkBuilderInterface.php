@@ -12,22 +12,14 @@
 namespace Menu\Service;
 
 use Menu\Contract\MenuAwareManager;
-use Krystal\Application\Module\ModuleManagerInterface;
 
 interface LinkBuilderInterface
 {
     /**
-     * Loads data from array of link definitions
-     * 
-     * @param array $definitions
-     * @return void
-     */
-    public function loadFromDefiniton(array $definitions);
-
-    /**
      * Extract links from registered services
      * 
+     * @param array $definitions
      * @return array
      */
-    public function collect();
+    public function collect(array $definitions);
 }

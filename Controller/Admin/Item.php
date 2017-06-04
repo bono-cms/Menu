@@ -18,6 +18,36 @@ use Menu\View\Nestedable;
 final class Item extends AbstractAdminController
 {
     /**
+     * Create menu links
+     * 
+     * @return array
+     */
+    private function createLinks()
+    {
+        $menu = $this->moduleManager->getModule('Menu');
+
+        // Menu link builder is just prepared, but now configured yet. I.e it has no data yet
+        // So we'll be adding it here. If adding it in Module definition, then that would be extra overhead
+        $linkBuilder = $menu->getService('linkBuilder');
+
+        // Default links to be prepended
+        $defaults = array(
+            '#' => $this->translator->translate('None'), 
+            '0' => $this->translator->translate('Custom link')
+        );
+
+        $output = array();
+
+        // Translate module names
+        foreach ($linkBuilder->collect($menu->getLinkDefinitions()) as $module => $data) {
+            $output[$this->translator->translate($module)] = $data;
+        }
+
+        // Prepare links
+        return array_merge($defaults, $output);
+    }
+
+    /**
      * Creates a form
      * 
      * @param \Krystal\Stdlib\VirtualEntity $item
@@ -45,7 +75,7 @@ final class Item extends AbstractAdminController
         $treeBuilder = $this->getTreeBuilder($categoryId);
 
         return $this->view->render('browser', array(
-            'links' => $this->getLinkBuilder()->collect(),
+            'links' => $this->createLinks(),
             'itemsBlock' => $treeBuilder->render(new Nestedable(), $active),
             'items'  => $treeBuilder->render(new PhpArray('name'), $active),
             'categories' => $this->getCategoryManager()->fetchAll(),
