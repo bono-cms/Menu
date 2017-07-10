@@ -22,14 +22,6 @@ interface SiteServiceInterface
     public function setHomeWebPageId($homeWebPageId);
 
     /**
-     * Fetches menu category's name by its associated class name
-     * 
-     * @param string $class Menu category's class name
-     * @return string
-     */
-    public function getCategoryNameByClass($class);
-
-    /**
      * Renders category block associated with provided web page id
      * 
      * @param string $webPageId

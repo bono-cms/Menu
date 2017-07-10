@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Categories are no longer filtered by language ID
  * Removed internal `LinkBuilder` service
  * Improved the way of fetching records. Since now additional database queries won't be executed in iteration
  * Fixed issue with quote escaping

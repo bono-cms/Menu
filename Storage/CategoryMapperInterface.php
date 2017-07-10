@@ -33,14 +33,6 @@ interface CategoryMapperInterface
     public function fetchMaxDepthById($id);
 
     /**
-     * Fetches category's name by its associated class name
-     * 
-     * @param string $class Category's name
-     * @return string
-     */
-    public function fetchNameByClass($class);
-
-    /**
      * Fetch unique classes
      * 
      * @return array

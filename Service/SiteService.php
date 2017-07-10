@@ -90,17 +90,6 @@ final class SiteService implements SiteServiceInterface
     }
 
     /**
-     * Fetches menu category's name by its associated class name
-     * 
-     * @param string $class Menu category's class name
-     * @return string
-     */
-    public function getCategoryNameByClass($class)
-    {
-        return $this->categoryMapper->fetchNameByClass($class);
-    }
-
-    /**
      * Renders category block associated with provided web page id
      * 
      * @param string $webPageId
