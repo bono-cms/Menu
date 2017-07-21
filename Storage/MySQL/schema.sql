@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS `bono_module_menu_categories`;
 CREATE TABLE `bono_module_menu_categories` (
 
 	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`lang_id` INT NOT NULL COMMENT 'Language identification',
 	`name` varchar(254) NOT NULL,
 	`max_depth` INT NOT NULL,
 	`class` varchar(254) NOT NULL
