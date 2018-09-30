@@ -10,8 +10,8 @@
  */
 
 return array(
-    '\Shop\Storage\MySQL\ProductMapper' => 'Shop (Products)',
-    '\Shop\Storage\MySQL\CategoryMapper' => 'Shop (Categories)',
+    #'\Shop\Storage\MySQL\ProductMapper' => 'Shop (Products)',
+    #'\Shop\Storage\MySQL\CategoryMapper' => 'Shop (Categories)',
     '\Pages\Storage\MySQL\PageMapper' => 'Pages',
     '\Photogallery\Storage\MySQL\AlbumMapper' => 'Photogallery',
     '\News\Storage\MySQL\PostMapper' => 'News (Posts)',
