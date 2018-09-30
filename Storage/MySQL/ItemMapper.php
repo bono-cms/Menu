@@ -86,7 +86,7 @@ final class ItemMapper extends AbstractMapper implements ItemMapperInterface
     public function fetchAllByCategoryId($categoryId, $published)
     {
         $db = $this->db->select('*')
-                        ->from(static::getTableName())
+                        ->from(self::getTableName())
                         ->whereEquals('lang_id', $this->getLangId())
                         ->andWhereEquals('category_id', $categoryId);
 
