@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * In regular `Dropdown` renderer added extra option to override item class
+ * In regular `Dropdown` renderer added extra option to override inner UL class
  * Categories are no longer filtered by language ID
  * Removed internal `LinkBuilder` service
  * Improved the way of fetching records. Since now additional database queries won't be executed in iteration

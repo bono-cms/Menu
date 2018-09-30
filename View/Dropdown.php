@@ -36,6 +36,11 @@ final class Dropdown extends AbstractSiteDropdown
             }
 
             $li->addAttribute('class', $activeClass);
+        } else {
+            // Add class item if defined
+            if (isset($this->options['class']['item'])) {
+                $li->addAttribute('class', $this->options['class']['item']);
+            }
         }
 
         $a = new NodeElement();
@@ -107,8 +112,14 @@ final class Dropdown extends AbstractSiteDropdown
     protected function getNestedLevelParent()
     {
         $ul = new NodeElement();
-        return $ul->openTag('ul')
-                  ->finalize()
+        $ul->openTag('ul');
+
+        // Check whether we have a class name
+        if (isset($this->options['class']['inner'])) {
+            $ul->addAttribute('class', $this->options['class']['inner']);
+        }
+
+        return $ul->finalize()
                   ->render();
     }
 }
