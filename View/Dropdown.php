@@ -59,7 +59,7 @@ final class Dropdown extends AbstractSiteDropdown
             $a->addAttribute('title', $row['hint']);
         }
 
-        $a->setText($row['name'])
+        $a->setText($this->createItemText($row))
           ->closeTag();
 
         $li->appendChild($a);

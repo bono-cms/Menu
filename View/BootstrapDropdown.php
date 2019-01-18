@@ -58,7 +58,7 @@ final class BootstrapDropdown extends AbstractSiteDropdown
             ));
         }
 
-        $a->setText($row['name'].PHP_EOL);
+        $a->setText($this->createItemText($row));
 
         if ($hasChildren) {
             $span = new NodeElement();

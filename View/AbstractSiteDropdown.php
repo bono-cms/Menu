@@ -11,6 +11,7 @@
 
 namespace Menu\View;
 
+use Krystal\Form\NodeElement;
 use Krystal\Tree\AdjacencyList\Render\AbstractDropdown;
 use Cms\Service\WebPageManagerInterface;
 use Menu\Contract\WebPageAwareRendererInterface;
@@ -51,6 +52,28 @@ abstract class AbstractSiteDropdown extends AbstractDropdown implements WebPageA
     public function setHomeWebPageId($homeWebPageId)
     {
         $this->homeWebPageId = $homeWebPageId;
+    }
+
+    /**
+     * Create item text based on its icon value
+     * 
+     * @param array $row
+     * @return string
+     */
+    final protected function createItemText(array $row)
+    {
+        // Handle optional font-icon
+        if (empty($row['icon'])) {
+            $i = new NodeElement();
+            $i->openTag('i')
+              ->setAttribute('class', $row['icon'])
+              ->closeTag();
+
+            // Text of the icon
+            return $i->render() . ' ' . $row['name'];
+        } else {
+            return $row['name'];
+        }
     }
 
     /**
