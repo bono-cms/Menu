@@ -31,6 +31,7 @@ abstract class AbstractItemService extends AbstractManager
             ->setLink($item['link'], VirtualEntity::FILTER_HTML)
             ->setHasLink($item['has_link'], VirtualEntity::FILTER_BOOL)
             ->setHint($item['hint'], VirtualEntity::FILTER_HTML)
+            ->setIcon($item['icon'], VirtualEntity::FILTER_HTML)
             ->setOpenInNewWindow($item['open_in_new_window'], VirtualEntity::FILTER_BOOL)
             ->setPublished($item['published'], VirtualEntity::FILTER_BOOL);
 

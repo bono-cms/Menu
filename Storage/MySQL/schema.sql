@@ -23,6 +23,7 @@ CREATE TABLE `bono_module_menu_items` (
 	`has_link` varchar(1) NOT NULL COMMENT 'Indicates whether item should point to innter web page or to external resource',
 	`hint` TEXT NOT NULL COMMENT 'A hint might be useful for presentation',
 	`published` varchar(1) NOT NULL COMMENT 'Whether this item is visible or not',
-	`open_in_new_window` varchar(1) NOT NULL COMMENT 'Whether an item should be opened in new window or not'
+	`open_in_new_window` varchar(1) NOT NULL COMMENT 'Whether an item should be opened in new window or not',
+    `icon` varchar(255) NOT NULL COMMENT 'Optional item font-icon'
 
 ) DEFAULT CHARSET=UTF8;
