@@ -63,14 +63,15 @@ abstract class AbstractSiteDropdown extends AbstractDropdown implements WebPageA
     final protected function createItemText(array $row)
     {
         // Handle optional font-icon
-        if (empty($row['icon'])) {
+        if (!empty($row['icon'])) {
             $i = new NodeElement();
             $i->openTag('i')
-              ->setAttribute('class', $row['icon'])
+              ->addAttribute('class', $row['icon'])
+              ->finalize()
               ->closeTag();
 
             // Text of the icon
-            return $i->render() . ' ' . $row['name'];
+            return $i->render();
         } else {
             return $row['name'];
         }
