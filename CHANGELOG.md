@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added optional font-icon support
  * In regular `Dropdown` renderer added extra option to override item class
  * In regular `Dropdown` renderer added extra option to override inner UL class
  * Categories are no longer filtered by language ID
