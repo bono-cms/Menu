@@ -27,21 +27,13 @@ final class Item extends AbstractAdminController
         $menu = $this->moduleManager->getModule('Menu');
         $service = $this->getService('Cms', 'webPageManager');
 
-        // Default links to be prepended
-        $defaults = array(
-            '#' => $this->translator->translate('None'), 
-            '0' => $this->translator->translate('Custom link')
-        );
-
-        $output = array();
-
-        // Translate module names
-        foreach ($service->createPrettyLinks($menu->getLinkDefinitions()) as $module => $data) {
-            $output[$this->translator->translate($module)] = $data;
-        }
-
         // Prepare links
-        return array_merge($defaults, $output);
+        $items = array_replace(array(
+            '#' => 'None', 
+            '0' => 'Custom link'
+        ), $service->createPrettyLinks($menu->getLinkDefinitions()));
+
+        return $this->translator->translateArray($items);
     }
 
     /**
