@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Don't show expand/collapse buttons and parent dropdown if category depth is less or equals one
  * Added optional font-icon support
  * In regular `Dropdown` renderer added extra option to override item class
  * In regular `Dropdown` renderer added extra option to override inner UL class

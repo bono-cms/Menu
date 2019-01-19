@@ -11,12 +11,16 @@ defined('KRYSTAL') or die;
 	<ul id="contextMenu" class="dropdown-menu" role="menu">
 		<li><a href="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Return to beginning'); ?></a></li>
 		<li class="dropdown-header"><?php $this->show('Item'); ?></li>
+        <?php if ($canHaveChildren): ?>
 		<li><a href="#" data-button="add-child"><i class="glyphicon glyphicon-share"></i> <?php $this->show('Add child item'); ?></a></li>
+        <?php endif; ?>
 		<li><a href="#" data-button="item-edit"><i class="glyphicon glyphicon-edit"></i> <?php $this->show('Edit this item'); ?></a></li>
 		<li><a href="#" data-button="remove" data-base-removal-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', null); ?>" data-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" data-id=""><i class="glyphicon glyphicon-flash"></i> <?php $this->show('Remove this item'); ?></a></li>
+        <?php if ($canHaveChildren): ?>
 		<li class="dropdown-header"><?php $this->show('Nesting'); ?></li>
 		<li><a href="#" data-button="expand-all"><i class="glyphicon glyphicon-resize-full"></i> <?php $this->show('Expand all'); ?></a></li>
 		<li><a href="#" data-button="collapse-all"><i class="glyphicon glyphicon-resize-small"></i> <?php $this->show('Collapse all'); ?></a></li>
+        <?php endif; ?>
 	</ul>
 	<!-- /Context menu for items -->
 
@@ -65,7 +69,7 @@ defined('KRYSTAL') or die;
 					  </div>
 					</div>
 
-					<?php if (!$item->getId()): ?>
+					<?php if (!$item->getId() && $canHaveChildren): ?>
 					<div class="form-group">
 					  <label for="select" class="col-lg-2 control-label"><?php $this->show('Parent item'); ?></label>
 					  <div class="col-lg-10">

@@ -71,14 +71,18 @@ final class Item extends AbstractAdminController
 
         $treeBuilder = $this->getTreeBuilder($categoryId);
 
+        // Current maximal depth
+        $maxDepth = $this->getCategoryManager()->fetchMaxDepthById($categoryId);
+
         return $this->view->render('browser', array(
             'links' => $this->createLinks(),
             'itemsBlock' => $treeBuilder->render(new Nestedable(), $active),
             'items'  => $treeBuilder->render(new PhpArray('name'), $active),
             'categories' => $this->getCategoryManager()->fetchAll(),
-            'maxDepth' => $this->getCategoryManager()->fetchMaxDepthById($categoryId),
+            'maxDepth' => $maxDepth,
             'helper_title' => $title,
-            'item' => $item
+            'item' => $item,
+            'canHaveChildren' => $maxDepth > 1
         ));
     }
 
