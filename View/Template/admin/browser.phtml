@@ -79,16 +79,16 @@ defined('KRYSTAL') or die;
 					<?php endif; ?>
 
 					<div class="form-group">
-					  <label for="textArea" class="col-lg-2 control-label"><?php $this->show('Hint'); ?></label>
+					  <label for="hint" class="col-lg-2 control-label"><?php $this->show('Hint'); ?></label>
 					  <div class="col-lg-10">
-                        <?php echo Element::textarea('hint', $item->getHint(), array('rows' => 3, 'class' => 'form-control', 'id' => 'textArea', 'placeholder' => $this->translate('Hint to be displayed when mouse overs'))); ?>
+                        <?php echo Element::textarea('hint', $item->getHint(), array('rows' => 3, 'class' => 'form-control', 'id' => 'hint', 'placeholder' => $this->translate('Hint to be displayed when mouse overs'))); ?>
 					  </div>
 					</div>
 
 					<div class="form-group">
-					  <label for="textArea" class="col-lg-2 control-label"><?php $this->show('Icon'); ?></label>
+					  <label for="icon" class="col-lg-2 control-label"><?php $this->show('Icon'); ?></label>
 					  <div class="col-lg-10">
-                        <?php echo Element::textarea('icon', $item->getIcon(), array('class' => 'form-control', 'placeholder' => $this->translate('Optional font-icon'))); ?>
+                        <?php echo Element::textarea('icon', $item->getIcon(), array('class' => 'form-control', 'id' => 'icon', 'placeholder' => $this->translate('Optional font-icon'))); ?>
 					  </div>
 					</div>
 
