@@ -1,7 +1,9 @@
 <?php
 
-use Krystal\Form\HtmlHelper;
+use Krystal\Widget\GridWidget;
 use Krystal\Form\Element;
+use Cms\View\Icon;
+
 defined('KRYSTAL') or die;
 
 ?>
@@ -156,57 +158,65 @@ defined('KRYSTAL') or die;
 <div class="table-responsive">
 	<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
 
-	<table class="table table-hover table-bordered table-striped table-condensed">
-		<thead>
-			<tr>
-				<th class="text-center"><?php $this->show('#'); ?></th>
-				<th class="text-center"><?php $this->show('Name'); ?></th>
-				<th class="text-center"><?php $this->show('Maximal depth'); ?></th>
-				<?php if ($extendedMode): ?>
-				<th class="text-center"><?php $this->show('Class'); ?></th>
-				<th class="text-center"><?php $this->show('Actions'); ?></th>
-				<?php endif; ?>
-			</tr>
-		</thead>
-		
-		<?php if (!empty($categories)): ?>
-		<tbody>
-			<?php foreach ($categories as $category): ?>
-			<tr>
-				<td class="text-center text-muted"><?php echo $category->getId(); ?></td>
-				<td class="text-center">
-					<a href="<?php echo $this->url('Menu:Admin:Item@categoryAction', $category->getId()); ?>">
-						<?php if ($category->getId() == $item->getCategoryId()): ?>
-						<strong><?php echo $category->getName(); ?></strong>
-						<?php else: ?>
-						<?php echo $category->getName(); ?>
-						<?php endif; ?>
-					</a>
-				</td>
-				<td class="text-center"><?php echo $category->getMaxDepth(); ?></td>
-				
-				<?php if ($extendedMode): ?>
-				<td class="text-center"><?php echo $category->getClass(); ?></td>
-				<td class="text-center">
-					<a data-button="edit" href="<?php echo $this->url('Menu:Admin:Category@editAction', $category->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit the category'); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-					<a data-button="delete" href="#" data-success-url="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>" data-url="<?php echo $this->url('Menu:Admin:Category@deleteAction', $category->getId()); ?>" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove the category with all its items'); ?>" ><i class="glyphicon glyphicon-remove"></i></a>
-				</td>
-				<?php endif; ?>
-			</tr>
-			<?php endforeach; ?>
-		</tbody>
-		<?php endif; ?>
-	</table>
+    <?= $this->widget(new GridWidget($categories, array(
+        'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+        'rowAttributes' => array(
+            'class' => function($category) use ($item){
+                return $category->getId() == $item->getCategoryId() ? 'info' : null;
+            }
+        ),
+        'columns' => array(
+            array(
+                'column' => 'id',
+                'label' => '#'
+            ),
 
-	<?php if (empty($categories)): ?>
-	<div class="center-block">
-		<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
+            array(
+                'column' => 'name',
+                'value' => function($category){
+                    return Element::link($category->getName(), $this->url('Menu:Admin:Item@categoryAction', $category->getId()));
+                }
+            ),
+
+            array(
+                'column' => 'max_depth',
+                'label' => 'Maximal depth'
+            ),
+
+            array(
+                'column' => 'class',
+                'hidden' => !$extendedMode
+            )
+        ),
+
+        'actions' => $extendedMode ? array(
+            'edit' => function($category){
+                return Icon::edit(
+                    $this->url('Menu:Admin:Category@editAction', $category->getId()),
+                    $this->translate('Edit this category')
+                );
+            },
+
+            'remove' => function($category){
+                return Icon::remove(
+                    $this->url('Menu:Admin:Category@deleteAction', $category->getId()),
+                    $this->translate('Remove the category with all its items'),
+                    null,
+                    $this->url('Menu:Admin:Item@indexAction')
+                );
+            }
+        ) : null
+    ))); ?>
+
+    <?php if (empty($categories)): ?>
+    <div class="center-block">
+        <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
 	</div>
-	<?php endif; ?>
+    <?php endif; ?>
 
-	<?php if ($extendedMode): ?>
+    <?php if ($extendedMode): ?>
 	<div class="pull-left">
-		<a href="<?php echo $this->url('Menu:Admin:Category@addAction'); ?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> <?php $this->show('Add category'); ?></a>
+        <a href="<?php echo $this->url('Menu:Admin:Category@addAction'); ?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> <?php $this->show('Add category'); ?></a>
 	</div>
 	<?php endif; ?>
 </div>
