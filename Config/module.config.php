@@ -1,10 +1,20 @@
 <?php
 
+/**
+ * Module configuration container
+ */
+
 return array(
     'name'  => 'Menu',
-    'caption'  => 'Menu',
-    'route' => 'Menu:Admin:Item@indexAction',
-    'icon'  => 'fa fa-bars fa-5x',
-    'order' => 3,
-    'description' => 'Menu modules allows you to easily handle different menus on your site'
+    'description' => 'Menu modules allows you to easily handle different menus on your site',
+    'menu' => array(
+        'name' => 'Menu',
+        'icon' => 'fas fa-bars',
+        'items' => array(
+            array(
+                'route' => 'Menu:Admin:Item@indexAction',
+                'name' => 'View all menu items'
+            )
+        )
+    )
 );
