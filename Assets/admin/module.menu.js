@@ -79,9 +79,9 @@ $(function(){
 		e.preventDefault();
 
 		$contextMenu.css({
-			display: "block",
-			left: e.pageX,
-			top: e.pageY
+            display: "block",
+            left: $(this).position().left + 200,
+			top: $(this).position().top
 		});
 
 		// Each li element has an id
