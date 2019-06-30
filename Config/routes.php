@@ -59,6 +59,11 @@ return array(
         'disallow' => array('guest')
     ),
     
+    '/%s/module/menu/category/truncate/(:var)' => array(
+        'controller' => 'Admin:Category@truncateAction',
+        'disallow' => array('guest')
+    ),
+
     '/%s/module/menu/browse/category/(:var)' => array(
         'controller' => 'Admin:Item@categoryAction'
     ),

@@ -80,6 +80,20 @@ final class Category extends AbstractAdminController
     }
 
     /**
+     * Truncates a category. Removes all attached items
+     * 
+     * @param int $id Category id
+     * @return int
+     */
+    public function truncateAction($id)
+    {
+        $this->getModuleService('itemManager')->deleteAllByCategoryId($id);
+
+        $this->flashBag->set('success', 'The menu category has been truncated successfully');
+        return 1;
+    }
+
+    /**
      * Persists a category
      * 
      * @return string
