@@ -133,7 +133,8 @@ defined('KRYSTAL') or die;
                 </div>
                 
                 <button class="btn btn-primary btn-lg" data-button="remove" data-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Remove'); ?></button>
-                <button class="btn btn-danger btn-lg" data-button="cancel"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Cancel'); ?></button>
+                <a href="<?= $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Cancel'); ?></a>
+                
                 <?php else: ?>
 
                 <div class="btn-group">

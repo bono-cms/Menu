@@ -178,15 +178,9 @@ $(function(){
 			}
 		});
 	});
-	
-	// Cancel event listener. That must always redirect to current category view
-	$("[data-button='cancel']").click(function(event){
-		event.preventDefault();
-		toCurrentCategory();
-	});
-	
+
 	// Save event listener
-	$("[data-button='save']").click(function(event) {
+    $("[data-button='save']").click(function(event) {
 		event.preventDefault();
 		$.ajax({
 			url : $(this).data('url'),
