@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Added Bootstrap4 menu generator
+ * Added `truncate category` action button
  * Don't show expand/collapse buttons and parent dropdown if category depth is less or equals one
  * Added optional font-icon support
  * In regular `Dropdown` renderer added extra option to override item class
