@@ -137,6 +137,17 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
     }
 
     /**
+     * Delete all items by associated category id
+     * 
+     * @parqm int $id Category id
+     * @return boolean
+     */
+    public function deleteAllByCategoryId($id)
+    {
+        return $this->itemMapper->deleteAllByCategoryId($id);
+    }
+
+    /**
      * Deletes an item by its associated id
      * 
      * @param string $id Item's id

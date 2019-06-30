@@ -74,6 +74,14 @@ interface ItemManagerInterface
     public function update(array $data);
 
     /**
+     * Delete all items by associated category id
+     * 
+     * @parqm int $id Category id
+     * @return boolean
+     */
+    public function deleteAllByCategoryId($id);
+
+    /**
      * Deletes an item by its associated id
      * 
      * @param string $id Item id
