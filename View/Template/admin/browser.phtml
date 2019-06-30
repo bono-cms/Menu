@@ -195,6 +195,15 @@ defined('KRYSTAL') or die;
         ),
 
         'actions' => $extendedMode ? array(
+            'truncate' => function($category){
+                return Icon::reset(
+                    $this->url('Menu:Admin:Category@truncateAction', $category->getId()),
+                    $this->translate('Truncate this category'),
+                    $this->translate('This will remove all items inside this category, are you sure?'),
+                    $this->url('Menu:Admin:Item@categoryAction', $category->getId())
+                );
+            },
+
             'edit' => function($category){
                 return Icon::edit(
                     $this->url('Menu:Admin:Category@editAction', $category->getId()),
