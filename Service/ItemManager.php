@@ -17,7 +17,7 @@ use Cms\Service\HistoryManagerInterface;
 use Krystal\Tree\AdjacencyList\ChildrenJsonParser;
 use Krystal\Stdlib\ArrayUtils;
 
-final class ItemManager extends AbstractItemService implements ItemManagerInterface
+final class ItemManager extends AbstractItemService
 {
     /**
      * Any compliant item mapper which implements ItemMapperInterface

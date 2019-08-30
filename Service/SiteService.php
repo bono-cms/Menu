@@ -18,7 +18,7 @@ use Menu\Storage\CategoryMapperInterface;
 use Menu\Storage\ItemMapperInterface;
 use RuntimeException;
 
-final class SiteService implements SiteServiceInterface
+final class SiteService
 {
     /**
      * ItemMnager is used to grab items by category class

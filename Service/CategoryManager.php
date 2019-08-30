@@ -17,7 +17,7 @@ use Cms\Service\AbstractManager;
 use Cms\Service\HistoryManagerInterface;
 use Krystal\Stdlib\VirtualEntity;
 
-final class CategoryManager extends AbstractManager implements CategoryManagerInterface
+final class CategoryManager extends AbstractManager
 {
     /**
      * Any mapper which implements CategoryMapperInterface
