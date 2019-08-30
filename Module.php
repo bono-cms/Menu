@@ -39,14 +39,13 @@ final class Module extends AbstractCmsModule
         $itemMapper = $this->getMapper('/Menu/Storage/MySQL/ItemMapper');
         $categoryMapper = $this->getMapper('/Menu/Storage/MySQL/CategoryMapper');
 
-        $historyManager = $this->getHistoryManager();
         $webPageManager = $this->getWebPageManager();
 
         return array(
             'menuWidget' => new MenuWidget($itemMapper),
             'siteService' => new SiteService($itemMapper, $categoryMapper, $webPageManager),
-            'itemManager' => new ItemManager($itemMapper, $categoryMapper, $historyManager),
-            'categoryManager' => new CategoryManager($categoryMapper, $itemMapper, $historyManager)
+            'itemManager' => new ItemManager($itemMapper, $categoryMapper),
+            'categoryManager' => new CategoryManager($categoryMapper, $itemMapper)
         );
     }
 }

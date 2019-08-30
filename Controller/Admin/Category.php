@@ -73,10 +73,19 @@ final class Category extends AbstractAdminController
      */
     public function deleteAction($id)
     {
-        $service = $this->getModuleService('categoryManager');
-        $service->deleteById($id);
+        $historyService = $this->getService('Cms', 'historyManager');
+        $category = $this->getCategoryManager()->fetchById($id);
 
-        $this->flashBag->set('success', 'Selected element has been removed successfully');
+        if ($category !== false) {
+            $service = $this->getModuleService('categoryManager');
+            $service->deleteById($id);
+
+            $this->flashBag->set('success', 'Selected element has been removed successfully');
+
+            // Save in the history
+            $historyService->write('Menu', 'Category menu "%s" has been removed', $category->getName());
+        }
+
         return '1';
     }
 
@@ -114,17 +123,23 @@ final class Category extends AbstractAdminController
         ));
 
         if ($formValidator->isValid()) {
+            $historyService = $this->getService('Cms', 'historyManager');
             $service = $this->getModuleService('categoryManager');
 
             if (!empty($input['id'])) {
                 if ($service->update($input)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
+
+                    $historyService->write('Menu', 'Category menu "%s" has been updated', $input['name']);
+                    // Save in the history
                     return '1';
                 }
 
             } else {
                 if ($service->add($input)) {
                     $this->flashBag->set('success', 'The element has been created successfully');
+
+                    $historyService->write('Menu', 'Category menu "%s" has been created', $input['name']);
                     return $service->getLastId();
                 }
             }

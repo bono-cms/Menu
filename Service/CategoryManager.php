@@ -16,7 +16,6 @@ use Menu\Storage\ItemMapperInterface;
 use Cms\Service\AbstractManager;
 use Cms\Service\HistoryManagerInterface;
 use Krystal\Stdlib\VirtualEntity;
-use Krystal\Security\Filter;
 
 final class CategoryManager extends AbstractManager implements CategoryManagerInterface
 {
@@ -35,25 +34,16 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
     private $itemMapper;
 
     /**
-     * History manager is responsible for keeping track of latest actions
-     * 
-     * @var \Cms\Service\HistoryManagerInterface
-     */
-    private $historyManager;
-
-    /**
      * State initialization
      * 
      * @param \Menu\Storage\CategoryMapperInterface $categoryMapper
      * @param \Menu\Storage\ItemMapperInterface $itemMapper
-     * @param \Cms\Service\HistoryManagerInterface $historyManager
      * @return void
      */
-    public function __construct(CategoryMapperInterface $categoryMapper, ItemMapperInterface $itemMapper, HistoryManagerInterface $historyManager)
+    public function __construct(CategoryMapperInterface $categoryMapper, ItemMapperInterface $itemMapper)
     {
         $this->categoryMapper = $categoryMapper;
         $this->itemMapper = $itemMapper;
-        $this->historyManager = $historyManager;
     }
 
     /**
@@ -88,13 +78,24 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
     }
 
     /**
-     * Returns last inserted id
+     * Fetches all category entities
      * 
-     * @return integer
+     * @return array
      */
-    public function getLastId()
+    public function fetchAll()
     {
-        return $this->categoryMapper->getLastId();
+        return $this->prepareResults($this->categoryMapper->fetchAll());
+    }
+
+    /**
+     * Fetches a category bag by its associated id
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        return $this->prepareResult($this->categoryMapper->fetchById($id));
     }
 
     /**
@@ -105,6 +106,16 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
     public function fetchClasses()
     {
         return $this->categoryMapper->fetchClasses();
+    }
+
+    /**
+     * Returns last inserted id
+     * 
+     * @return integer
+     */
+    public function getLastId()
+    {
+        return $this->categoryMapper->getLastId();
     }
 
     /**
@@ -129,7 +140,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
      */
     public function add(array $input)
     {
-        $this->track('Category menu "%s" has been created', $input['name']);
         return $this->categoryMapper->insert($input);
     }
 
@@ -141,7 +151,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
      */
     public function update(array $data)
     {
-        $this->track('Category menu "%s" has been updated', $data['name']);
         return $this->categoryMapper->update($data);
     }
 
@@ -154,42 +163,6 @@ final class CategoryManager extends AbstractManager implements CategoryManagerIn
      */
     public function deleteById($id)
     {
-        $name = Filter::escape($this->categoryMapper->fetchNameById($id));
-
-        $this->track('Category menu "%s" has been removed', $name);
         return $this->categoryMapper->deleteById($id) && $this->itemMapper->deleteAllByCategoryId($id);
-    }
-
-    /**
-     * Tracks activity
-     * 
-     * @param string $message
-     * @param string $placeholder
-     * @return boolean
-     */
-    private function track($message, $placeholder = '')
-    {
-        return $this->historyManager->write('Menu', $message, $placeholder);
-    }
-
-    /**
-     * Fetches all category entities
-     * 
-     * @return array
-     */
-    public function fetchAll()
-    {
-        return $this->prepareResults($this->categoryMapper->fetchAll());
-    }
-
-    /**
-     * Fetches a category bag by its associated id
-     * 
-     * @param string $id
-     * @return array
-     */
-    public function fetchById($id)
-    {
-        return $this->prepareResult($this->categoryMapper->fetchById($id));
     }
 }

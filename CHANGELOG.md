@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Moved history tracker of out main service into the main controller
  * Added Bootstrap4 menu generator
  * Added `truncate category` action button
  * Don't show expand/collapse buttons and parent dropdown if category depth is less or equals one

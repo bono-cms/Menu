@@ -15,7 +15,6 @@ use Menu\Storage\ItemMapperInterface;
 use Menu\Storage\CategoryMapperInterface;
 use Cms\Service\HistoryManagerInterface;
 use Krystal\Tree\AdjacencyList\ChildrenJsonParser;
-use Krystal\Security\Filter;
 use Krystal\Stdlib\ArrayUtils;
 
 final class ItemManager extends AbstractItemService implements ItemManagerInterface
@@ -35,44 +34,27 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
     private $categoryMapper;
 
     /**
-     * History manager is responsible for keeping track of latest actions
-     * 
-     * @var \Cms\Service\HistoryManagerInterface
-     */
-    private $historyManager;
-
-    /**
      * State initialization
      * 
      * @param \Menu\Storage\ItemMapperInterface $itemMapper Any compliant mapper that implements this interface
      * @param \Menu\Storage\CategoryMapperInterface $categoryMapperInterface Any storage adapter that implements this interface
-     * @param \Cms\Service\HistoryManagerInterface $historyManager
      * @return void
      */
-    public function __construct(ItemMapperInterface $itemMapper, CategoryMapperInterface $categoryMapper, HistoryManagerInterface $historyManager)
+    public function __construct(ItemMapperInterface $itemMapper, CategoryMapperInterface $categoryMapper)
     {
         $this->itemMapper = $itemMapper;
         $this->categoryMapper = $categoryMapper;
-        $this->historyManager = $historyManager;
     }
 
     /**
-     * Saves an order that has been dragged and dropped
+     * Fetches item's entity by its associated id
      * 
-     * @param string $json JSON string
-     * @return boolean
+     * @param string $id
+     * @return \Krystal\Stdlib\VirtualEntity
      */
-    public function save($json)
+    public function fetchById($id)
     {
-        $parser = new ChildrenJsonParser();
-
-        if ($parser->update($json, $this->itemMapper)) {
-            $this->track('Menu items have been sorted');
-            return true;
-
-        } else {
-            return false;
-        }
+        return $this->prepareResult($this->itemMapper->fetchById($id));
     }
 
     /**
@@ -111,6 +93,18 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
     }
 
     /**
+     * Saves an order that has been dragged and dropped
+     * 
+     * @param string $json JSON string
+     * @return boolean
+     */
+    public function save($json)
+    {
+        $parser = new ChildrenJsonParser();
+        return $parser->update($json, $this->itemMapper);
+    }
+
+    /**
      * Adds an item
      * 
      * @param array $input Raw input data
@@ -118,10 +112,7 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
      */
     public function add(array $input)
     {
-        $this->track('A new "%s" item has been created', $input['name']);
-        $this->itemMapper->insert(ArrayUtils::arrayWithout($input, array('max_depth')));
-
-        return true;
+        return $this->itemMapper->insert(ArrayUtils::arrayWithout($input, array('max_depth')));
     }
 
     /**
@@ -132,7 +123,6 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
      */
     public function update(array $input)
     {
-        $this->track('The "%s" item has been updated', $input['name']);
         return $this->itemMapper->update(ArrayUtils::arrayWithout($input, array('max_depth')));
     }
 
@@ -155,32 +145,6 @@ final class ItemManager extends AbstractItemService implements ItemManagerInterf
      */
     public function deleteById($id)
     {
-        $name = Filter::escape($this->itemMapper->fetchNameById($id));
-
-        $this->track('The "%s" item has been removed', $name);
         return $this->itemMapper->deleteById($id) && $this->itemMapper->deleteAllByParentId($id);
-    }
-
-    /**
-     * Fetches item's entity by its associated id
-     * 
-     * @param string $id
-     * @return \Krystal\Stdlib\VirtualEntity
-     */
-    public function fetchById($id)
-    {
-        return $this->prepareResult($this->itemMapper->fetchById($id));
-    }
-
-    /**
-     * Tracks activity
-     * 
-     * @param string $message
-     * @param string $placeholder
-     * @return boolean
-     */
-    private function track($message, $placeholder = '')
-    {
-        return $this->historyManager->write('Menu', $message, $placeholder);
     }
 }

@@ -145,7 +145,6 @@ final class Item extends AbstractAdminController
      */
     public function viewAction($id)
     {
-        // Try to grab item's entity
         $item = $this->getItemManager()->fetchById($id);
 
         if ($item !== false) {
@@ -162,10 +161,15 @@ final class Item extends AbstractAdminController
      */
     public function addAction()
     {
+        $input = $this->request->getPost();
+        
         $itemManager = $this->getItemManager();
+        $itemManager->add($input);
 
-        $itemManager->add($this->request->getPost());
         $this->flashBag->set('success', 'An item has been created successfully!');
+
+        $historyService = $this->getService('Cms', 'historyManager');
+        $historyService->write('Menu', 'A new "%s" item has been created', $input['name']);
 
         return $itemManager->getLastId();
     }
@@ -177,8 +181,13 @@ final class Item extends AbstractAdminController
      */
     public function updateAction()
     {
-        $this->getItemManager()->update($this->request->getPost());
+        $input = $this->request->getPost();
+
+        $this->getItemManager()->update($input);
         $this->flashBag->set('success', 'An item has been updated successfully!');
+
+        $historyService = $this->getService('Cms', 'historyManager');
+        $historyService->write('Menu', 'The "%s" item has been updated', $input['name']);
 
         return '1'; 
     }
@@ -191,6 +200,9 @@ final class Item extends AbstractAdminController
     public function saveAction()
     {
         if ($this->request->hasPost('json_data')) {
+            $historyService = $this->getService('Cms', 'historyManager');
+            $historyManager->write('Menu', 'Menu items have been sorted');
+
             $jsonData = $this->request->getPost('json_data');
 
             return $this->getItemManager()->save($jsonData);
@@ -205,8 +217,16 @@ final class Item extends AbstractAdminController
      */
     public function deleteAction($id)
     {
-        $this->getItemManager()->deleteById($id);
-        $this->flashBag->set('success', 'The item has been removed successfully!');
+        $item = $this->getItemManager()->fetchById($id);
+
+        if ($item !== false) {
+            $historyService = $this->getService('Cms', 'historyManager');
+            $historyService->write('Menu', 'The "%s" item has been removed', $item->getName());
+
+            $this->getItemManager()->deleteById($id);
+            $this->flashBag->set('success', 'The item has been removed successfully!');
+        }
+
         return '1';
     }
 }
