@@ -13,17 +13,17 @@ defined('KRYSTAL') or die;
     <div class="row">
         <!-- Context menu for items -->
         <div id="contextMenu" class="dropdown-menu" role="menu">
-            <a class="dropdown-item" href="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>"><i class="glyphicon glyphicon-list"></i> <?php $this->show('Return to beginning'); ?></a>
+            <a class="dropdown-item" href="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>"><i class="fas fa-bars"></i> <?php $this->show('Return to beginning'); ?></a>
             <div class="dropdown-header"><?php $this->show('Item'); ?></div>
             <?php if ($canHaveChildren): ?>
-            <a class="dropdown-item" href="#" data-button="add-child"><i class="glyphicon glyphicon-share"></i> <?php $this->show('Add child item'); ?></a>
+            <a class="dropdown-item" href="#" data-button="add-child"><i class="fas fa-share-square"></i> <?php $this->show('Add child item'); ?></a>
             <?php endif; ?>
-            <a class="dropdown-item" href="#" data-button="item-edit"><i class="glyphicon glyphicon-edit"></i> <?php $this->show('Edit this item'); ?></a>
-            <a class="dropdown-item" href="#" data-button="remove" data-base-removal-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', null); ?>" data-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" data-id=""><i class="glyphicon glyphicon-flash"></i> <?php $this->show('Remove this item'); ?></a>
+            <a class="dropdown-item" href="#" data-button="item-edit"><i class="fas fa-pencil-alt"></i> <?php $this->show('Edit this item'); ?></a>
+            <a class="dropdown-item" href="#" data-button="remove" data-base-removal-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', null); ?>" data-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" data-id=""><i class="fas fa-trash-alt"></i> <?php $this->show('Remove this item'); ?></a>
             <?php if ($canHaveChildren): ?>
             <div class="dropdown-header"><?php $this->show('Nesting'); ?></div>
-            <a class="dropdown-item" href="#" data-button="expand-all"><i class="glyphicon glyphicon-resize-full"></i> <?php $this->show('Expand all'); ?></a>
-            <a class="dropdown-item" href="#" data-button="collapse-all"><i class="glyphicon glyphicon-resize-small"></i> <?php $this->show('Collapse all'); ?></a>
+            <a class="dropdown-item" href="#" data-button="expand-all"><i class="fas fa-expand-arrows-alt"></i> <?php $this->show('Expand all'); ?></a>
+            <a class="dropdown-item" href="#" data-button="collapse-all"><i class="fas fa-compress-arrows-alt"></i> <?php $this->show('Collapse all'); ?></a>
             <?php endif; ?>
         </div>
         <!-- /Context menu for items -->
