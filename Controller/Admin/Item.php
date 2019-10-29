@@ -53,7 +53,8 @@ final class Item extends AbstractAdminController
                     ->appendScripts(array(
                         '@Menu/nestable/jquery.nestable.js',
                         '@Menu/admin/module.menu.js'
-                    ))->appendStylesheets(array(
+                    ))
+                    ->appendStylesheets(array(
                         '@Menu/nestable/jquery.nestable.css',
                     ));
 
