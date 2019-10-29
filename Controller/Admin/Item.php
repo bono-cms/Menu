@@ -162,7 +162,7 @@ final class Item extends AbstractAdminController
     public function addAction()
     {
         $input = $this->request->getPost();
-        
+
         $itemManager = $this->getItemManager();
         $itemManager->add($input);
 
