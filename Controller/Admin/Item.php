@@ -202,7 +202,7 @@ final class Item extends AbstractAdminController
     {
         if ($this->request->hasPost('json_data')) {
             $historyService = $this->getService('Cms', 'historyManager');
-            $historyManager->write('Menu', 'Menu items have been sorted');
+            $historyService->write('Menu', 'Menu items have been sorted');
 
             $jsonData = $this->request->getPost('json_data');
 
