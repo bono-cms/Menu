@@ -19,5 +19,6 @@ return array(
     '\Blog\Storage\MySQL\PostMapper' => 'Blog (Posts)',
     '\Blog\Storage\MySQL\CategoryMapper' => 'Blog (Categories)',
     '\Announcement\Storage\MySQL\AnnounceMapper' => 'Announcement',
-    '\MailForm\Storage\MySQL\FormMapper' => 'MailForm'
+    '\MailForm\Storage\MySQL\FormMapper' => 'MailForm',
+    '\Tour\Storage\MySQL\CategoryMapper' => 'Tour (Categories)',
 );
