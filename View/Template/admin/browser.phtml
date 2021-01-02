@@ -9,7 +9,6 @@ defined('KRYSTAL') or die;
 ?>
 
 <div class="card">
-
     <div class="row">
         <!-- Context menu for items -->
         <div id="contextMenu" class="dropdown-menu" role="menu">
@@ -38,7 +37,7 @@ defined('KRYSTAL') or die;
             </div>
             <?php endif; ?>
         </div>
-        
+
         <div class="col-lg-6">
             <?php if (!empty($categories)): ?>
             <form  autocomplete="off" data-add-child-url="<?php echo $this->url('Menu:Admin:Item@addChildAction', '{category}', '{parent}'); ?>" data-home-url="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>" data-category-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', null); ?>" data-item-url="<?php echo $this->url('Menu:Admin:Item@viewAction', null); ?>">
@@ -118,7 +117,7 @@ defined('KRYSTAL') or die;
             
             <br />
 
-            <div class="">
+            <div>
                 <?php if ($item->getId()): ?>
                 <div class="btn-group">
                   <a class="btn btn-primary btn-lg" data-button="save" data-url="<?php echo $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></a>
@@ -164,38 +163,41 @@ defined('KRYSTAL') or die;
 <div class="card">
 	<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
 
-    <?= $this->widget(new GridViewWidget($categories, array(
+    <?= $this->widget(new GridViewWidget($categories, [
         'tableClass' => 'table table-hover table-bordered table-striped',
-        'rowAttributes' => array(
+        'rowAttributes' => [
             'class' => function($category) use ($item){
                 return $category->getId() == $item->getCategoryId() ? 'table-info' : null;
             }
-        ),
-        'columns' => array(
-            array(
+        ],
+        'columns' => [
+            [
                 'column' => 'id',
                 'label' => '#'
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'name',
+                'attributes' => [
+                    'class' => null
+                ],
                 'value' => function($category){
                     return Element::link($category->getName(), $this->url('Menu:Admin:Item@categoryAction', $category->getId()));
                 }
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'max_depth',
                 'label' => 'Maximal depth'
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'class',
                 'hidden' => !$extendedMode
-            )
-        ),
+            ]
+        ],
 
-        'actions' => $extendedMode ? array(
+        'actions' => $extendedMode ? [
             'truncate' => function($category){
                 return Icon::reset(
                     $this->url('Menu:Admin:Category@truncateAction', $category->getId()),
@@ -220,8 +222,8 @@ defined('KRYSTAL') or die;
                     $this->url('Menu:Admin:Item@indexAction')
                 );
             }
-        ) : null
-    ))); ?>
+        ] : null
+    ])); ?>
 
     <?php if (empty($categories)): ?>
     <div class="center-block">
