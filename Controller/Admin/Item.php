@@ -33,7 +33,24 @@ final class Item extends AbstractAdminController
             '0' => 'Custom link'
         ), $service->createPrettyLinks($menu->getLinkDefinitions()));
 
-        return $this->translator->translateArray($items);
+        return $this->translateItems($items);
+    }
+
+    /**
+     * Translate captions only
+     * 
+     * @param array $items Items to translate
+     * @return array
+     */
+    private function translateItems($items)
+    {
+        $output = array();
+
+        foreach ($items as $category => $item) {
+            $output[$this->translator->translate($category)] = !is_array($item) ? $this->translator->translate($item) : $item;
+        }
+
+        return $output;
     }
 
     /**
