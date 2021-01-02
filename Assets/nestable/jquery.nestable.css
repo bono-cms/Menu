@@ -1,6 +1,6 @@
 
 .chosen-container-single, .chosen-single {
- min-width: 585px !important;
+ min-width: 100% !important;
 }
 
 .chosen-container .chosen-results {
@@ -17,7 +17,10 @@ fieldset {
 }
 
 #contextMenu {
-  background: #222222;
+                position: absolute;
+            top: 0px;
+            left: 0px;
+
 }
 
 
