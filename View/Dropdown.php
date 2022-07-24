@@ -64,6 +64,10 @@ final class Dropdown extends AbstractSiteDropdown
         if (!empty($row['hint'])) {
             $a->addAttribute('title', $row['hint']);
         }
+        
+        if (isset($this->options['class']['a'])) {
+            $a->addAttribute('class', $this->options['class']['a']);
+        }
 
         $a->setText($this->createItemText($row))
           ->closeTag();
