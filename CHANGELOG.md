@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added rendered for Bootstrap 5
  * Moved history tracker of out main service into the main controller
  * Added Bootstrap4 menu generator
  * Added `truncate category` action button
