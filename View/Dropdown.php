@@ -39,7 +39,7 @@ final class Dropdown extends AbstractSiteDropdown
         } else {
             // Add class item if defined
             if ($this->hasChildren($row['id'], $parents)) {
-                $liClass = $this->options['class']['item_parent'];
+                $liClass = isset($this->options['class']['item_parent']) ? $this->options['class']['item_parent'] : null;
             } else {
                 $liClass = isset($this->options['class']['item']) ? $this->options['class']['item'] : null;
             }
