@@ -30,7 +30,7 @@ Basic example:
 
 # Available methods
 
-## Render entire by class
+## Render entire menu by class name
 The method `renderByClass()` has the following signature:
 
     \Menu\Service\SiteService::renderByClass($class, $active = null, $widget)
