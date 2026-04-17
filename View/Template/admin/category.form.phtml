@@ -46,11 +46,11 @@
 
         <div class="border-top pt-3">
             <?php if ($category->getId()): ?>
-            <button type="button" data-button="save" data-url="<?= $this->url('Menu:Admin:Category@saveAction'); ?>" class="btn btn-primary">
+            <button type="submit" data-button="save" data-url="<?= $this->url('Menu:Admin:Category@saveAction'); ?>" class="btn btn-primary">
                 <i class="bi bi-check-circle"></i> <?= $this->translate('Save'); ?>
             </button>
             <?php else: ?>
-            <button type="button" data-button="add" data-back-url="<?= $this->url('Menu:Admin:Category@editAction', null); ?>" data-url="<?= $this->url('Menu:Admin:Category@saveAction'); ?>" class="btn btn-success">
+            <button type="submit" data-button="add" data-back-url="<?= $this->url('Menu:Admin:Category@editAction', null); ?>" data-url="<?= $this->url('Menu:Admin:Category@saveAction'); ?>" class="btn btn-success">
                 <i class="bi bi-plus-circle"></i> <?= $this->translate('Add'); ?>
             </button>
             <?php endif; ?>
