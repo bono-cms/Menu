@@ -6,7 +6,7 @@ CREATE TABLE `bono_module_menu_categories` (
 	`name` varchar(254) NOT NULL,
 	`max_depth` INT NOT NULL,
 	`class` varchar(254) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /* Menu items */
 DROP TABLE IF EXISTS `bono_module_menu_items`;
@@ -28,4 +28,4 @@ CREATE TABLE `bono_module_menu_items` (
     FOREIGN KEY (category_id) REFERENCES bono_module_menu_categories(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE,
     FOREIGN KEY (web_page_id) REFERENCES bono_module_cms_webpages(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
