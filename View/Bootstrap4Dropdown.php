@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -54,12 +52,12 @@ final class Bootstrap4Dropdown extends AbstractSiteDropdown
         }
 
         if ($hasChildren) {
-            $a->addAttributes(array(
+            $a->addAttributes([
                 'class' => 'nav-link dropdown-toggle',
                 'data-toggle' => 'dropdown',
                 'role' => 'button',
                 'aria-expanded' => 'false'
-            ));
+            ]);
         } else {
             $a->addAttribute('class', 'nav-link');
         }

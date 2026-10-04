@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -13,7 +11,7 @@ namespace Menu\View;
 
 use Krystal\Form\NodeElement;
 
-/* Special drop-down renderer made for Twitter bootstrap 4.x */
+/* Special drop-down renderer made for Twitter bootstrap 5.x */
 final class Bootstrap5Dropdown extends AbstractSiteDropdown
 {
     /**
@@ -52,12 +50,12 @@ final class Bootstrap5Dropdown extends AbstractSiteDropdown
         }
 
         if ($hasChildren) {
-            $a->addAttributes(array(
+            $a->addAttributes([
                 'class' => 'nav-link dropdown-toggle',
                 'data-bs-toggle' => 'dropdown',
                 'role' => 'button',
                 'aria-expanded' => 'false'
-            ));
+            ]);
         } else {
             $a->addAttribute('class', $isActive ? 'nav-link active' : 'nav-link');
         }

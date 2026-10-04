@@ -4,25 +4,24 @@
  * Module configuration container
  */
 
-return array(
+return [
     'name'  => 'Menu',
     'description' => 'Menu modules allows you to easily handle different menus on your site',
-    // Bookmarks of this module
-    'bookmarks' => array(
-        array(
+    'bookmarks' => [
+        [
             'name' => 'Configure menu',
             'controller' => 'Menu:Admin:Item@indexAction',
             'icon' => 'fas fa-bars'
-        )
-    ),
-    'menu' => array(
+        ]
+    ],
+    'menu' => [
         'name' => 'Menu',
         'icon' => 'fas fa-bars',
-        'items' => array(
-            array(
+        'items' => [
+            [
                 'route' => 'Menu:Admin:Item@indexAction',
                 'name' => 'View all menu items'
-            )
-        )
-    )
-);
+            ]
+        ]
+    ]
+];

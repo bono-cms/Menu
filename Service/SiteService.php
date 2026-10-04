@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -100,7 +98,7 @@ final class SiteService
         $categoryId = $this->itemMapper->fetchCategoryIdByWebPageId($webPageId);
         $class = $this->categoryMapper->fetchClassById($categoryId);
 
-        return $this->renderByClass($class, $webPageId);
+        return $this->renderByClass($class, $webPageId, null);
     }
 
     /**

@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -28,10 +26,10 @@ final class Item extends AbstractAdminController
         $service = $this->getService('Cms', 'webPageManager');
 
         // Prepare links
-        $items = array_replace(array(
+        $items = array_replace([
             '#' => 'None', 
             '0' => 'Custom link'
-        ), $service->createPrettyLinks($menu->getLinkDefinitions()));
+        ], $service->createPrettyLinks($menu->getLinkDefinitions()));
 
         return $this->translateItems($items);
     }
@@ -44,7 +42,7 @@ final class Item extends AbstractAdminController
      */
     private function translateItems($items)
     {
-        $output = array();
+        $output = [];
 
         foreach ($items as $category => $item) {
             $output[$this->translator->translate($category)] = !is_array($item) ? $this->translator->translate($item) : $item;
@@ -67,13 +65,13 @@ final class Item extends AbstractAdminController
         // Load view plugins
         $this->view->getPluginBag()
                     ->load('chosen')
-                    ->appendScripts(array(
+                    ->appendScripts([
                         '@Menu/nestable/jquery.nestable.js',
                         '@Menu/admin/module.menu.js'
-                    ))
-                    ->appendStylesheets(array(
+                    ])
+                    ->appendStylesheets([
                         '@Menu/nestable/jquery.nestable.css',
-                    ));
+                    ]);
 
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
@@ -84,7 +82,7 @@ final class Item extends AbstractAdminController
         // Current maximal depth
         $maxDepth = $this->getCategoryManager()->fetchMaxDepthById($categoryId);
 
-        return $this->view->render('index', array(
+        return $this->view->render('index', [
             'links' => $this->createLinks(),
             'itemsBlock' => $treeBuilder->render(new Nestedable(), $active),
             'items'  => $treeBuilder->render(new PhpArray('name'), $active),
@@ -93,7 +91,7 @@ final class Item extends AbstractAdminController
             'helper_title' => $title,
             'item' => $item,
             'canHaveChildren' => $maxDepth > 1
-        ));
+        ]);
     }
 
     /**
@@ -189,7 +187,9 @@ final class Item extends AbstractAdminController
         $historyService = $this->getService('Cms', 'historyManager');
         $historyService->write('Menu', 'A new "%s" item has been created', $input['name']);
 
-        return $itemManager->getLastId();
+        return $this->json([
+            'redirect' => $this->createUrl('Menu:Admin:Item@viewAction', [$itemManager->getLastId()]),
+        ]);
     }
 
     /**
@@ -207,7 +207,9 @@ final class Item extends AbstractAdminController
         $historyService = $this->getService('Cms', 'historyManager');
         $historyService->write('Menu', 'The "%s" item has been updated', $input['name']);
 
-        return '1'; 
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -245,6 +247,8 @@ final class Item extends AbstractAdminController
             $this->flashBag->set('success', 'The item has been removed successfully!');
         }
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 }

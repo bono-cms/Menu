@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -26,10 +24,10 @@ final class Nestedable extends AbstractDropdown
     {
         $li = new NodeElement();
         $li->openTag('li');
-        $li->addAttributes(array(
+        $li->addAttributes([
             'class' => 'dd-item', 
             'data-id' => $row['id']
-        ));
+        ]);
 
         // Nested div inside li
         $div = new NodeElement();

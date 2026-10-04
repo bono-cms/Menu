@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -112,7 +110,7 @@ final class ItemManager extends AbstractItemService
      */
     public function add(array $input)
     {
-        return $this->itemMapper->insert(ArrayUtils::arrayWithout($input, array('max_depth')));
+        return $this->itemMapper->insert(ArrayUtils::arrayWithout($input, ['max_depth']));
     }
 
     /**
@@ -123,7 +121,7 @@ final class ItemManager extends AbstractItemService
      */
     public function update(array $input)
     {
-        return $this->itemMapper->update(ArrayUtils::arrayWithout($input, array('max_depth')));
+        return $this->itemMapper->update(ArrayUtils::arrayWithout($input, ['max_depth']));
     }
 
     /**

@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -40,9 +38,9 @@ final class MenuWidget extends AbstractItemService implements MenuWidgetInterfac
      */
     public function fetchAllAsOneDummy()
     {
-        return array(
+        return [
             $this->fetchDummy()
-        );
+        ];
     }
 
     /**
@@ -53,7 +51,7 @@ final class MenuWidget extends AbstractItemService implements MenuWidgetInterfac
      */
     public function getIdsFromEntities(array $items)
     {
-        $ids = array();
+        $ids = [];
 
         foreach ($items as $item) {
             array_push($ids, $item->getId());
@@ -167,10 +165,10 @@ final class MenuWidget extends AbstractItemService implements MenuWidgetInterfac
             return $attached;
         }
 
-        $result = array();
+        $result = [];
 
         // First of all, let's extract current ids we have
-        $inputIds = array();
+        $inputIds = [];
 
         foreach($items as $item) {
             array_push($inputIds, $item['id']);
@@ -219,7 +217,7 @@ final class MenuWidget extends AbstractItemService implements MenuWidgetInterfac
     private function normalizeInput(array $array)
     {
         // This is what we're going to return
-        $output = array();
+        $output = [];
 
         // First of all, we need to count amount of values
         // In order to create amount of keys in resulting array
@@ -248,7 +246,7 @@ final class MenuWidget extends AbstractItemService implements MenuWidgetInterfac
             for ($k = 0; $k < $keysCount; $k++) {
                 // Create index on demand
                 if (!isset($output[$i])) {
-                    $output[$i] = array();
+                    $output[$i] = [];
                 }
 
                 // Current key and value

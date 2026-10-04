@@ -3,15 +3,12 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
 
 namespace Menu\Controller\Admin;
 
-use Krystal\Validate\Pattern;
 use Krystal\Stdlib\VirtualEntity;
 
 final class Category extends AbstractAdminController
@@ -29,9 +26,9 @@ final class Category extends AbstractAdminController
         $this->view->getBreadcrumbBag()->addOne('Menu', 'Menu:Admin:Item@indexAction')
                                        ->addOne($title);
 
-        return $this->view->render('category.form', array(
+        return $this->view->render('category.form', [
             'category' => $category
-        ));
+        ]);
     }
 
     /**
@@ -86,7 +83,9 @@ final class Category extends AbstractAdminController
             $historyService->write('Menu', 'Category menu "%s" has been removed', $category->getName());
         }
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -100,7 +99,9 @@ final class Category extends AbstractAdminController
         $this->getModuleService('itemManager')->deleteAllByCategoryId($id);
 
         $this->flashBag->set('success', 'The menu category has been truncated successfully');
-        return 1;
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -110,19 +111,18 @@ final class Category extends AbstractAdminController
      */
     public function saveAction()
     {
-        $input = $this->request->getPost('category');
+        $validator = $this->createValidation();
 
-        $formValidator = $this->createValidator(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => array(
-                    'name' => new Pattern\Name(),
-                    'class' => new Pattern\ClassName()
-                )
-            )
-        ));
+        $validator->field('category.name')
+                  ->required()
+                  ->addRule('minlength', null, ['min' => 2]);
 
-        if ($formValidator->isValid()) {
+        $validator->field('category.class')
+                  ->required();
+
+        if ($validator->isPassed()) {
+            $input = $this->request->getPost('category');
+
             $historyService = $this->getService('Cms', 'historyManager');
             $service = $this->getModuleService('categoryManager');
 
@@ -132,7 +132,9 @@ final class Category extends AbstractAdminController
 
                     $historyService->write('Menu', 'Category menu "%s" has been updated', $input['name']);
                     // Save in the history
-                    return '1';
+                    return $this->json([
+                        'refresh' => true
+                    ]);
                 }
 
             } else {
@@ -140,12 +142,16 @@ final class Category extends AbstractAdminController
                     $this->flashBag->set('success', 'The element has been created successfully');
 
                     $historyService->write('Menu', 'Category menu "%s" has been created', $input['name']);
-                    return $service->getLastId();
+                    return $this->json([
+                        'redirect' => $this->createUrl('Menu:Admin:Category@editAction', [$service->getLastId()]),
+                    ]);
                 }
             }
 
         } else {
-            return $formValidator->getErrors();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }

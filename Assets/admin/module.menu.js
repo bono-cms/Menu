@@ -68,7 +68,106 @@ $(function(){
 			return 5;
 		}
 	}
-	
+
+	/**
+	 * Parses an AJAX response into a normalized object
+	 * 
+	 * Returns an object with the following possible keys:
+	 *  - redirect  : a URL to redirect to
+	 *  - refresh   : boolean, whether the page should be refreshed
+	 *  - errors    : array of errors, to be shown
+	 *  - id        : a numeric id (legacy support)
+	 *  - legacy    : the raw response, for anything else
+	 * 
+	 * @param mixed response
+	 * @return object
+	 */
+	function parseResponse(response){
+		var result = {
+			redirect : null,
+			refresh  : false,
+			errors   : null,
+			id       : null,
+			legacy   : response
+		};
+
+		// Try to decode JSON
+		var decoded = null;
+
+		if (typeof response === 'object') {
+			// Already decoded (e.g. jQuery auto-parsed it)
+			decoded = response;
+		} else if (typeof response === 'string' && response.length > 0) {
+			try {
+				decoded = $.parseJSON(response);
+			} catch (e) {
+				decoded = null;
+			}
+		}
+
+		if (decoded !== null && typeof decoded === 'object') {
+			if (typeof decoded.redirect !== 'undefined') {
+				result.redirect = decoded.redirect;
+			}
+
+			if (typeof decoded.refresh !== 'undefined') {
+				result.refresh = Boolean(decoded.refresh);
+			}
+
+			if (typeof decoded.errors !== 'undefined') {
+				result.errors = decoded.errors;
+			}
+		} else if ($.isNumeric(response)) {
+			// Legacy: raw numeric response (e.g. last inserted id)
+			result.id = response;
+		}
+
+		return result;
+	}
+
+	/**
+	 * Handles a response by executing the appropriate action
+	 * 
+	 * @param mixed response
+	 * @return void
+	 */
+	function handleResponse(response){
+		var parsed = parseResponse(response);
+
+		// Handle errors first
+		if (parsed.errors !== null) {
+			$.showErrors(parsed.errors);
+			return;
+		}
+
+		// Handle redirect
+		if (parsed.redirect !== null && parsed.redirect !== '') {
+			window.location = parsed.redirect;
+			return;
+		}
+
+		// Handle refresh
+		if (parsed.refresh === true) {
+			window.location.reload();
+			return;
+		}
+
+		// Legacy: numeric id (e.g. from addAction)
+		if (parsed.id !== null) {
+			toItem(parsed.id);
+			return;
+		}
+
+		// Legacy: string "1" (from updateAction/deleteAction)
+		if (parsed.legacy === "1" || parsed.legacy === 1) {
+			window.location.reload();
+			return;
+		}
+
+		// Nothing matched — log it for debugging
+		console.log(parsed.legacy);
+	}
+
 	$('.chosen-select').chosen();
     
 	var $contextMenu = $("#contextMenu");
@@ -137,10 +236,16 @@ $(function(){
 			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
-				if ($.isNumeric(response)) {
+				var parsed = parseResponse(response);
+
+				if (parsed.errors !== null) {
+					$.showErrors(parsed.errors);
+				} else if (parsed.redirect !== null || parsed.id !== null) {
+					toCurrentCategory();
+				} else if (parsed.refresh === true) {
 					toCurrentCategory();
 				} else {
-					$.showErrors(response);
+					console.log(parsed.legacy);
 				}
 			}
 		});
@@ -153,11 +258,17 @@ $(function(){
 			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
-				if ($.isNumeric(response)) {
-					// On success response must represent a last id
-					toItem(response);
+				var parsed = parseResponse(response);
+
+				if (parsed.errors !== null) {
+					$.showErrors(parsed.errors);
+				} else if (parsed.redirect !== null) {
+					window.location = parsed.redirect;
+				} else if (parsed.id !== null) {
+					// Legacy: on success response represents a last id
+					toItem(parsed.id);
 				} else {
-					$.showErrors(response);
+					console.log(parsed.legacy);
 				}
 			}
 		});
@@ -170,10 +281,14 @@ $(function(){
 			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
-				if ($.isNumeric(response)) {
+				var parsed = parseResponse(response);
+
+				if (parsed.errors !== null) {
+					$.showErrors(parsed.errors);
+				} else if (parsed.redirect !== null || parsed.refresh === true || parsed.id !== null) {
 					toExit();
 				} else {
-					$.showErrors(response);
+					console.log(parsed.legacy);
 				}
 			}
 		});
@@ -186,10 +301,16 @@ $(function(){
 			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
-				if ($.isNumeric(response)) {
+				var parsed = parseResponse(response);
+
+				if (parsed.errors !== null) {
+					$.showErrors(parsed.errors);
+				} else if (parsed.redirect !== null) {
+					window.location = parsed.redirect;
+				} else if (parsed.refresh === true || parsed.id !== null || parsed.legacy === "1" || parsed.legacy === 1) {
 					window.location.reload();
 				} else {
-					$.showErrors(response);
+					console.log(parsed.legacy);
 				}
 			}
 		});
@@ -202,10 +323,16 @@ $(function(){
 			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
-				if (response == "1") {
+				var parsed = parseResponse(response);
+
+				if (parsed.errors !== null) {
+					$.showErrors(parsed.errors);
+				} else if (parsed.redirect !== null) {
+					window.location = parsed.redirect;
+				} else if (parsed.refresh === true || parsed.id !== null || parsed.legacy === "1" || parsed.legacy === 1) {
 					toCurrentCategory();
 				} else {
-					$.showErrors(response);
+					console.log(parsed.legacy);
 				}
 			}
 		});
@@ -218,10 +345,16 @@ $(function(){
 			url : $(this).data('url'),
 			data : $("form").serialize(),
 			success : function(response) {
-				if (response == "1") {
+				var parsed = parseResponse(response);
+
+				if (parsed.errors !== null) {
+					$.showErrors(parsed.errors);
+				} else if (parsed.redirect !== null) {
+					window.location = parsed.redirect;
+				} else if (parsed.refresh === true || parsed.id !== null || parsed.legacy === "1" || parsed.legacy === 1) {
 					toExit();
 				} else {
-					$.showErrors(response);
+					console.log(parsed.legacy);
 				}
 			}
 		});

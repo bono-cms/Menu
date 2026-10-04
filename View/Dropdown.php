@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -55,10 +53,10 @@ final class Dropdown extends AbstractSiteDropdown
 
         // Whether to open in new window?
         if ((bool) $row['open_in_new_window']) {
-            $a->addAttributes(array(
+            $a->addAttributes([
                 'target' => '_blank',
                 'rel' => 'noopener noreferrer'
-            ));
+            ]);
         }
 
         if (!empty($row['hint'])) {

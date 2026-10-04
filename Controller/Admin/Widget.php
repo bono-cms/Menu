@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -24,7 +22,7 @@ final class Widget extends AbstractAdminController
     final protected function getWithPrependedEmpty($items)
     {
         // array_merge breaks the indexes (i.e parent ids), so in this case we'd simply sum arrays
-        return array('0' => $this->translator->translate('— None —')) + $items;
+        return ['0' => $this->translator->translate('— None —')] + $items;
     }
 
     /**
@@ -77,24 +75,24 @@ final class Widget extends AbstractAdminController
 
             // No such web page? OK, then quickly workaround this
             if (!$items) {
-                $items = array();
+                $items = [];
             }
         }
 
-        return $this->view->disableLayout()->render('widget', array(
+        return $this->view->disableLayout()->render('widget', [
             'attached' => json_encode($menuWidget->getIdsFromEntities($items)),
             'items' => $items,
             'categories' => $categories,
             // Fetch items of first category
             'parentItems' => $this->getWithPrependedEmpty($this->getTreeBuilder($categoryId)->render(new PhpArray('name'))),
-            'publishOptions' => array(
+            'publishOptions' => [
                 '1' => "Yes, publish immediately",
                 '0' => "No, don't publish now"
-            ),
-            'newWindowOptions' => array(
+            ],
+            'newWindowOptions' => [
                 '0' => 'Open in the same window',
                 '1' => 'Open in new window'
-            )
-        ));
+            ]
+        ]);
     }
 }
