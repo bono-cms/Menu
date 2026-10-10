@@ -1,36 +1,35 @@
 <?php
 
 use Krystal\Form\HtmlHelper;
-defined('KRYSTAL') or die;
 
 ?>
 
-<input type="hidden" name="menu[attached]" value='<?php echo $attached; ?>' />
+<input type="hidden" name="menu[attached]" value='<?= $attached; ?>' />
 
 <?php foreach ($items as $item): ?>
 
 <div class="menu-block-container">
-	<input type="hidden" name="menu[widget][id][]" value="<?php echo $item->getId(); ?>" />
+	<input type="hidden" name="menu[widget][id][]" value="<?= $item->getId(); ?>" />
 	
-	<div class="form-group">
-		<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+	<div class="row mb-3">
+		<label class="col-lg-2 col-form-label"><?= $this->translate('Name'); ?></label>
 		<div class="col-lg-10">
 			<div class="input-group">
-				<input type="text" name="menu[widget][name][]" class="form-control" placeholder="<?php $this->show("Item's name which is taken from a title by default"); ?>" value="<?php echo $item->getName(); ?>" />
-				<span class="input-group-addon"><a href="#" data-widget-button="menu-remove" data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Cancel this item'); ?>"><i class="glyphicon glyphicon-remove"></i></a></span>
+				<input type="text" name="menu[widget][name][]" class="form-control" placeholder="<?= $this->translate("Item's name which is taken from a title by default"); ?>" value="<?= $item->getName(); ?>" />
+				<span class="input-group-text"><a href="#" data-widget-button="menu-remove" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= $this->translate('Cancel this item'); ?>"><i class="bi bi-x-circle"></i></a></span>
 			</div>
 		</div>
 	</div>
 	
 	
-	<div class="form-group">
-		<label class="col-lg-2 control-label"><?php $this->show('In menu'); ?></label>
+	<div class="row mb-3">
+		<label class="col-lg-2 col-form-label"><?= $this->translate('In menu'); ?></label>
 		<div class="col-lg-10">
 			
-			<select name="menu[widget][category_id][]" class="form-control" data-widget="menu-category" data-url="<?php echo $this->url('Menu:Admin:Widget@loadCategoryItemsAction'); ?>">
+			<select name="menu[widget][category_id][]" class="form-select" data-widget="menu-category" data-url="<?= $this->url('Menu:Admin:Widget@loadCategoryItemsAction'); ?>">
 				
 				<?php foreach ($categories as $categoryBag): ?>
-				<option value="<?php echo $categoryBag->getId(); ?>" <?php HtmlHelper::selectOnDemand($categoryBag->getId() == $item->getCategoryId()); ?>><?php echo $categoryBag->getName(); ?></option>
+				<option value="<?= $categoryBag->getId(); ?>" <?php HtmlHelper::selectOnDemand($categoryBag->getId() == $item->getCategoryId()); ?>><?= $categoryBag->getName(); ?></option>
 				<?php endforeach; ?>
 				
 			</select>
@@ -38,40 +37,40 @@ defined('KRYSTAL') or die;
 	</div>
 	
 	
-	<div class="form-group" data-widget="menu-parent-container">
-		<label class="col-lg-2 control-label"><?php $this->show('Parent item'); ?></label>
+	<div class="row mb-3" data-widget="menu-parent-container">
+		<label class="col-lg-2 col-form-label"><?= $this->translate('Parent item'); ?></label>
 		<div class="col-lg-10">
 			
-			<select name="menu[widget][parent_id][]" class="form-control" data-widget="menu-parent-item">
+			<select name="menu[widget][parent_id][]" class="form-select" data-widget="menu-parent-item">
 
 				<?php foreach ($parentItems as $id => $title): ?>
-				<option value="<?php echo $id; ?>" <?php HtmlHelper::selectOnDemand($id == $item->getParentId()); ?>><?php echo $title; ?></option>
+				<option value="<?= $id; ?>" <?php HtmlHelper::selectOnDemand($id == $item->getParentId()); ?>><?= $title; ?></option>
 				<?php endforeach; ?>
 				
 			</select>
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+	<div class="row mb-3">
+		<label class="col-lg-2 col-form-label"><?= $this->translate('Published'); ?></label>
 		<div class="col-lg-10">
 			
-			<select name="menu[widget][published][]" class="form-control">
+			<select name="menu[widget][published][]" class="form-select">
 				<?php foreach ($publishOptions as $value => $title): ?>
-				<option value="<?php echo $value; ?>" <?php HtmlHelper::selectOnDemand($value == $item->getPublished()); ?>><?php $this->show($title); ?></option>
+				<option value="<?= $value; ?>" <?php HtmlHelper::selectOnDemand($value == $item->getPublished()); ?>><?= $this->translate($title); ?></option>
 				<?php endforeach; ?>
 				
 			</select>
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<label class="col-lg-2 control-label"><?php $this->show('Window'); ?></label>
+	<div class="row mb-3">
+		<label class="col-lg-2 col-form-label"><?= $this->translate('Window'); ?></label>
 		<div class="col-lg-10">
 			
-			<select name="menu[widget][open_in_new_window][]" class="form-control">
+			<select name="menu[widget][open_in_new_window][]" class="form-select">
 				<?php foreach ($newWindowOptions as $value => $title): ?>
-				<option value="<?php echo $value; ?>" <?php HtmlHelper::selectOnDemand($value == $item->getOpenInNewWindow()); ?>><?php $this->show($title); ?></option>
+				<option value="<?= $value; ?>" <?php HtmlHelper::selectOnDemand($value == $item->getOpenInNewWindow()); ?>><?= $this->translate($title); ?></option>
 				<?php endforeach; ?>
 				
 			</select>

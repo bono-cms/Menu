@@ -4,110 +4,108 @@ use Krystal\Widget\GridView\GridViewWidget;
 use Krystal\Form\Element;
 use Cms\View\Icon;
 
-defined('KRYSTAL') or die;
-
 ?>
 
-<div class="card">
+<div class="card card-body">
     <div class="row">
         <!-- Context menu for items -->
         <div id="contextMenu" class="dropdown-menu" role="menu">
-            <a class="dropdown-item" href="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>"><i class="fas fa-bars"></i> <?php $this->show('Return to beginning'); ?></a>
-            <div class="dropdown-header"><?php $this->show('Item'); ?></div>
+            <a class="dropdown-item" href="<?= $this->url('Menu:Admin:Item@indexAction'); ?>"><i class="fas fa-bars"></i> <?= $this->translate('Return to beginning'); ?></a>
+            <div class="dropdown-header"><?= $this->translate('Item'); ?></div>
             <?php if ($canHaveChildren): ?>
-            <a class="dropdown-item" href="#" data-button="add-child"><i class="fas fa-share-square"></i> <?php $this->show('Add child item'); ?></a>
+            <a class="dropdown-item" href="#" data-button="add-child"><i class="fas fa-share-square"></i> <?= $this->translate('Add child item'); ?></a>
             <?php endif; ?>
-            <a class="dropdown-item" href="#" data-button="item-edit"><i class="fas fa-pencil-alt"></i> <?php $this->show('Edit this item'); ?></a>
-            <a class="dropdown-item" href="#" data-button="remove" data-base-removal-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', null); ?>" data-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" data-id=""><i class="fas fa-trash-alt"></i> <?php $this->show('Remove this item'); ?></a>
+            <a class="dropdown-item" href="#" data-button="item-edit"><i class="fas fa-pencil-alt"></i> <?= $this->translate('Edit this item'); ?></a>
+            <a class="dropdown-item" href="#" data-button="remove" data-base-removal-url="<?= $this->url('Menu:Admin:Item@deleteAction', null); ?>" data-url="<?= $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?= $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" data-id=""><i class="fas fa-trash-alt"></i> <?= $this->translate('Remove this item'); ?></a>
             <?php if ($canHaveChildren): ?>
-            <div class="dropdown-header"><?php $this->show('Nesting'); ?></div>
-            <a class="dropdown-item" href="#" data-button="expand-all"><i class="fas fa-expand-arrows-alt"></i> <?php $this->show('Expand all'); ?></a>
-            <a class="dropdown-item" href="#" data-button="collapse-all"><i class="fas fa-compress-arrows-alt"></i> <?php $this->show('Collapse all'); ?></a>
+            <div class="dropdown-header"><?= $this->translate('Nesting'); ?></div>
+            <a class="dropdown-item" href="#" data-button="expand-all"><i class="fas fa-expand-arrows-alt"></i> <?= $this->translate('Expand all'); ?></a>
+            <a class="dropdown-item" href="#" data-button="collapse-all"><i class="fas fa-compress-arrows-alt"></i> <?= $this->translate('Collapse all'); ?></a>
             <?php endif; ?>
         </div>
         <!-- /Context menu for items -->
 
         <div class="col-lg-6">
             <?php if (!empty($itemsBlock)): ?>
-            <div class="dd" data-url="<?php echo $this->url('Menu:Admin:Item@saveAction'); ?>"><?php echo $itemsBlock; ?></div>	
+            <div class="dd" data-url="<?= $this->url('Menu:Admin:Item@saveAction'); ?>"><?= $itemsBlock; ?></div>	
             <?php else: ?>
 
             <div class="center-block">
-                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No items'); ?></h2>
+                <h2 class="text-center text-muted"><i class="bi bi-x-circle"></i> <?= $this->translate('No items'); ?></h2>
             </div>
             <?php endif; ?>
         </div>
 
         <div class="col-lg-6">
             <?php if (!empty($categories)): ?>
-            <form  autocomplete="off" data-add-child-url="<?php echo $this->url('Menu:Admin:Item@addChildAction', '{category}', '{parent}'); ?>" data-home-url="<?php echo $this->url('Menu:Admin:Item@indexAction'); ?>" data-category-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', null); ?>" data-item-url="<?php echo $this->url('Menu:Admin:Item@viewAction', null); ?>">
-                <?php echo Element::hidden('category_id', $item->getCategoryId()); ?>
-                <?php echo Element::hidden('id', $item->getId()); ?>
-                <?php echo Element::hidden('has_link', $item->getHasLink()); ?>
-                <?php echo Element::hidden('max_depth', $maxDepth); ?>
+            <form  autocomplete="off" data-add-child-url="<?= $this->url('Menu:Admin:Item@addChildAction', '{category}', '{parent}'); ?>" data-home-url="<?= $this->url('Menu:Admin:Item@indexAction'); ?>" data-category-url="<?= $this->url('Menu:Admin:Item@categoryAction', null); ?>" data-item-url="<?= $this->url('Menu:Admin:Item@viewAction', null); ?>">
+                <?= Element::hidden('category_id', $item->getCategoryId()); ?>
+                <?= Element::hidden('id', $item->getId()); ?>
+                <?= Element::hidden('has_link', $item->getHasLink()); ?>
+                <?= Element::hidden('max_depth', $maxDepth); ?>
 
                 <div class="form-horizontal">
                   <fieldset>
-                    <legend class="text-muted"><i class="glyphicon glyphicon-list"></i> <?php $this->show($helper_title); ?></legend>
+                    <legend class="text-muted"><i class="bi bi-list-ul"></i> <?= $this->translate($helper_title); ?></legend>
 
-                    <div class="form-group">
-                      <label for="inputName" class="col-lg-12"><?php $this->show('Name'); ?></label>
+                    <div class="mb-3">
+                      <label for="inputName" class="col-lg-12 form-label"><?= $this->translate('Name'); ?></label>
                       <div class="col-lg-12">
-                        <?php echo Element::text('name', $item->getName(), ['id' => 'inputName', 'class' => 'form-control', 'placeholder' => $this->translate('Item name')]); ?>
+                        <?= Element::text('name', $item->getName(), ['id' => 'inputName', 'class' => 'form-control', 'placeholder' => $this->translate('Item name')]); ?>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="chosenSelect" class="col-lg-12"><?php $this->show('Link'); ?></label>
+                    <div class="mb-3">
+                      <label for="chosenSelect" class="col-lg-12 form-label"><?= $this->translate('Link'); ?></label>
                       <div class="col-lg-12">
-                        <?php echo Element::select('web_page_id', $links, $item->getWebPageId(), ['class' => 'chosen-select form-control', 'id' => 'chosenSelect']); ?>
+                        <?= Element::select('web_page_id', $links, $item->getWebPageId(), ['class' => 'chosen-select form-control', 'id' => 'chosenSelect']); ?>
                       </div>
                     </div>
 
-                    <div class="form-group" id="custom-link-row">
-                      <label for="inputLink" class="col-lg-12"><?php $this->show('Type a link'); ?></label>
+                    <div class="mb-3" id="custom-link-row">
+                      <label for="inputLink" class="col-lg-12 form-label"><?= $this->translate('Type a link'); ?></label>
                       <div class="col-lg-12">
-                        <?php echo Element::text('link', $item->getLink(), ['class' => 'form-control', 'id' => 'inputLink', 'placeholder' => $this->translate('http://')]); ?>
+                        <?= Element::text('link', $item->getLink(), ['class' => 'form-control', 'id' => 'inputLink', 'placeholder' => $this->translate('http://')]); ?>
                       </div>
                     </div>
 
                     <?php if (!$item->getId() && $canHaveChildren): ?>
-                    <div class="form-group">
-                      <label for="select" class="col-lg-12"><?php $this->show('Parent item'); ?></label>
+                    <div class="mb-3">
+                      <label for="select" class="col-lg-12 form-label"><?= $this->translate('Parent item'); ?></label>
                       <div class="col-lg-12">
-                        <?php echo Element::select('parent_id', $items, $item->getParentId(), ['class' => 'form-control', 'id' => 'select'], '— ' . $this->translate('None') . ' —'); ?>
+                        <?= Element::select('parent_id', $items, $item->getParentId(), ['class' => 'form-select', 'id' => 'select'], '— ' . $this->translate('None') . ' —'); ?>
                       </div>
                     </div>
                     <?php endif; ?>
 
-                    <div class="form-group">
-                      <label for="hint" class="col-lg-12"><?php $this->show('Hint'); ?></label>
+                    <div class="mb-3">
+                      <label for="hint" class="col-lg-12 form-label"><?= $this->translate('Hint'); ?></label>
                       <div class="col-lg-12">
-                        <?php echo Element::textarea('hint', $item->getHint(), ['rows' => 3, 'class' => 'form-control', 'id' => 'hint', 'placeholder' => $this->translate('Hint to be displayed when mouse overs')]); ?>
+                        <?= Element::textarea('hint', $item->getHint(), ['rows' => 3, 'class' => 'form-control', 'id' => 'hint', 'placeholder' => $this->translate('Hint to be displayed when mouse overs')]); ?>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="icon" class="col-lg-12"><?php $this->show('Icon'); ?></label>
+                    <div class="mb-3">
+                      <label for="icon" class="col-lg-12 form-label"><?= $this->translate('Icon'); ?></label>
                       <div class="col-lg-12">
-                        <?php echo Element::textarea('icon', $item->getIcon(), ['class' => 'form-control', 'id' => 'icon', 'placeholder' => $this->translate('Optional font-icon')]); ?>
+                        <?= Element::textarea('icon', $item->getIcon(), ['class' => 'form-control', 'id' => 'icon', 'placeholder' => $this->translate('Optional font-icon')]); ?>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label class="col-lg-12"><?php $this->show('Published'); ?></label>
+                    <div class="mb-3">
+                      <label class="col-lg-12 form-label"><?= $this->translate('Published'); ?></label>
                       <div class="col-lg-12">
-                        <div class="checkbox">
-                          <label><?php echo Element::checkbox('published', $item->getPublished()); ?></label>
+                        <div class="form-check">
+                          <label class="form-check-label"><?= Element::checkbox('published', $item->getPublished(), ['class' => 'form-check-input']); ?></label>
                         </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label class="col-lg-12"><?php $this->show('Open in new window'); ?></label>
+                    <div class="mb-3">
+                      <label class="col-lg-12 form-label"><?= $this->translate('Open in new window'); ?></label>
                       <div class="col-lg-12">
-                        <div class="checkbox">
-                          <label><?php echo Element::checkbox('open_in_new_window', $item->getOpenInNewWindow()); ?></label>
+                        <div class="form-check">
+                          <label class="form-check-label"><?= Element::checkbox('open_in_new_window', $item->getOpenInNewWindow(), ['class' => 'form-check-input']); ?></label>
                         </div>
                       </div>
                     </div>
@@ -120,30 +118,30 @@ defined('KRYSTAL') or die;
             <div>
                 <?php if ($item->getId()): ?>
                 <div class="btn-group">
-                  <a class="btn btn-primary btn-lg" data-button="save" data-url="<?php echo $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></a>
+                  <a class="btn btn-primary btn-lg" data-button="save" data-url="<?= $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="bi bi-save"></i> <?= $this->translate('Save'); ?></a>
 
                   <div class="btn-group">
-                      <a href="#" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                      <a href="#" class="btn btn-primary btn-lg dropdown-toggle" data-bs-toggle="dropdown"></a>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" data-button="save-create" data-url="<?php echo $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></a>
-                        <a class="dropdown-item" href="#" data-button="save-exit" data-url="<?php echo $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Exit'); ?></a>
+                        <a class="dropdown-item" href="#" data-button="save-create" data-url="<?= $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="bi bi-save"></i> <?= $this->translate('Save & Create new'); ?></a>
+                        <a class="dropdown-item" href="#" data-button="save-exit" data-url="<?= $this->url('Menu:Admin:Item@updateAction'); ?>"><i class="bi bi-save"></i> <?= $this->translate('Save & Exit'); ?></a>
                       </div>
                   </div>
                 </div>
                 
-                <button class="btn btn-primary btn-lg" data-button="remove" data-url="<?php echo $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?php echo $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Remove'); ?></button>
-                <a href="<?= $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Cancel'); ?></a>
+                <button class="btn btn-primary btn-lg" data-button="remove" data-url="<?= $this->url('Menu:Admin:Item@deleteAction', $item->getId()); ?>" data-success-url="<?= $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>"><i class="bi bi-trash"></i> <?= $this->translate('Remove'); ?></button>
+                <a href="<?= $this->url('Menu:Admin:Item@categoryAction', $item->getCategoryId()); ?>" class="btn btn-danger btn-lg"><i class="bi bi-x-circle"></i> <?= $this->translate('Cancel'); ?></a>
                 
                 <?php else: ?>
 
                 <div class="btn-group">
-                    <button type="submit" class="btn btn-primary" data-button="add" data-url="<?php echo $this->url('Menu:Admin:Item@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+                    <button type="submit" class="btn btn-primary" data-button="add" data-url="<?= $this->url('Menu:Admin:Item@addAction'); ?>"><i class="bi bi-save"></i> <?= $this->translate('Add'); ?></button>
 
                     <div class="btn-group">
-                      <a href="#" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                      <a href="#" class="btn btn-primary btn-lg dropdown-toggle" data-bs-toggle="dropdown"></a>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" data-button="create-new" data-url="<?php echo $this->url('Menu:Admin:Item@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></a>
-                        <a class="dropdown-item" href="#" data-button="create-exit" data-url="<?php echo $this->url('Menu:Admin:Item@addAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Exit'); ?></a>
+                        <a class="dropdown-item" href="#" data-button="create-new" data-url="<?= $this->url('Menu:Admin:Item@addAction'); ?>"><i class="bi bi-save"></i> <?= $this->translate('Add & Create new'); ?></a>
+                        <a class="dropdown-item" href="#" data-button="create-exit" data-url="<?= $this->url('Menu:Admin:Item@addAction'); ?>"><i class="bi bi-save"></i> <?= $this->translate('Add & Exit'); ?></a>
                       </div>
                     </div>
                 </div>
@@ -153,15 +151,15 @@ defined('KRYSTAL') or die;
 
             <?php else: ?>
             <div class="center-block">
-                <h2 class="text-center text-muted"><small><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('To start using menu module, you need to create at least one category'); ?></small></h2>
+                <h2 class="text-center text-muted"><small><i class="bi bi-x-circle"></i> <?= $this->translate('To start using menu module, you need to create at least one category'); ?></small></h2>
             </div>
             <?php endif; ?>
         </div>
     </div>
 </div>
 
-<div class="card">
-	<h4><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Categories'); ?> (<?php echo count($categories); ?>)</h4>
+<div class="card card-body">
+	<h4><i class="bi bi-list-ul"></i> <?= $this->translate('Categories'); ?> (<?= count($categories); ?>)</h4>
 
     <?= $this->widget(new GridViewWidget($categories, [
         'tableClass' => 'table table-hover table-bordered table-striped',
@@ -198,7 +196,7 @@ defined('KRYSTAL') or die;
         ],
 
         'actions' => $extendedMode ? [
-            'truncate' => function($category){
+            function($category){
                 return Icon::reset(
                     $this->url('Menu:Admin:Category@truncateAction', $category->getId()),
                     $this->translate('Truncate this category'),
@@ -207,14 +205,14 @@ defined('KRYSTAL') or die;
                 );
             },
 
-            'edit' => function($category){
+            function($category){
                 return Icon::edit(
                     $this->url('Menu:Admin:Category@editAction', $category->getId()),
                     $this->translate('Edit this category')
                 );
             },
 
-            'remove' => function($category){
+            function($category){
                 return Icon::remove(
                     $this->url('Menu:Admin:Category@deleteAction', $category->getId()),
                     $this->translate('Remove the category with all its items'),
@@ -227,13 +225,13 @@ defined('KRYSTAL') or die;
 
     <?php if (empty($categories)): ?>
     <div class="center-block">
-        <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
+        <h2 class="text-center text-muted"><i class="bi bi-x-circle"></i> <?= $this->translate('No categories'); ?></h2>
 	</div>
     <?php endif; ?>
 
     <?php if ($extendedMode): ?>
-	<div class="pull-left">
-        <a href="<?php echo $this->url('Menu:Admin:Category@addAction'); ?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> <?php $this->show('Add category'); ?></a>
+	<div class="float-start">
+        <a href="<?= $this->url('Menu:Admin:Category@addAction'); ?>" class="btn btn-primary btn-sm"><i class="bi bi-save"></i> <?= $this->translate('Add category'); ?></a>
 	</div>
 	<?php endif; ?>
 </div>

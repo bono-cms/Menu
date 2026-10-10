@@ -1,8 +1,6 @@
-<?php defined('KRYSTAL') or die; ?>
-
 <div class="menu-widget-btn-container">
-	<input type="hidden" name="widget-load-url" value="<?php echo $this->url('Menu:Admin:Widget@loadWigdetAction', null); ?>" />
-    <button data-button="add-item" data-url="<?php echo $this->url('Menu:Admin:Widget@loadEmptyAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-align-center"></i> <?php $this->show('Add an item'); ?></button>
+	<input type="hidden" name="widget-load-url" value="<?= $this->url('Menu:Admin:Widget@loadWigdetAction', null); ?>" />
+    <button data-button="add-item" data-url="<?= $this->url('Menu:Admin:Widget@loadEmptyAction'); ?>" class="btn btn-secondary"><i class="bi bi-align-center"></i> <?= $this->translate('Add an item'); ?></button>
 </div>
 
-<div class="well clearfix" data-container="menu-widget"></div>
+<div class="card card-body bg-light mb-3 clearfix" data-container="menu-widget"></div>

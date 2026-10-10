@@ -1,30 +1,24 @@
-<?php defined('KRYSTAL') or die; ?>
-
-<form class="card" data-group="category" autocomplete="off">
+<form class="card" autocomplete="off">
     <input type="hidden" name="category[id]" value="<?= $category->getId(); ?>" />
 
     <div class="card-body">
-        <div class="form-group row mb-3">
-            <label class="col-lg-12 col-form-label"><?= $this->translate('Name'); ?></label>
+        <div class="row mb-3">
+            <label class="col-lg-2 col-form-label"><?= $this->translate('Name'); ?></label>
             <div class="col-lg-10">
                 <div class="input-group">
                     <input type="text" name="category[name]" class="form-control" placeholder="<?= $this->translate('Category name'); ?>" value="<?= $category->getName(); ?>" />
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-                    </div>
+                    <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                 </div>
             </div>
         </div>
 
         <?php if ($extendedMode): ?>
-        <div class="form-group row mb-3">
-            <label class="col-lg-12 col-form-label"><?= $this->translate('Class'); ?></label>
+        <div class="row mb-3">
+            <label class="col-lg-2 col-form-label"><?= $this->translate('Class'); ?></label>
             <div class="col-lg-10">
                 <div class="input-group">
                     <input type="text" name="category[class]" class="form-control" placeholder="<?= $this->translate('Class to simplify rendering'); ?>" value="<?= $category->getClass(); ?>" />
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-                    </div>
+                    <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                 </div>
             </div>
         </div>
@@ -32,14 +26,12 @@
         <input type="hidden" name="category[class]" value="<?= $category->getClass(); ?>" />
         <?php endif; ?>
 
-        <div class="form-group row mb-4">
-            <label class="col-lg-12 col-form-label"><?= $this->translate('Maximal depth'); ?></label>
+        <div class="row mb-4">
+            <label class="col-lg-2 col-form-label"><?= $this->translate('Maximal depth'); ?></label>
             <div class="col-lg-10">
                 <div class="input-group">
                     <input type="number" name="category[max_depth]" class="form-control" placeholder="<?= $this->translate('Maximal allowed nested level for items'); ?>" value="<?= $category->getMaxDepth(); ?>" />
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-                    </div>
+                    <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                 </div>
             </div>
         </div>
